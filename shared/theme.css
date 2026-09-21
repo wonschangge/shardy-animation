@@ -357,3 +357,9 @@ table.rtable tr.hot td { background: rgba(94,234,212,.13); }
    .card 统一允许收缩；卡内长 IR 串允许任意处断行。 */
 .card { min-width: 0; }
 .card .mono, .irbox pre { overflow-wrap: anywhere; }
+
+/* 练习区收紧：3 个练习块堆叠时更省纵向空间（L1-04 / L1-07 实测需要） */
+.exercise { padding: 9px 13px; }
+.exercise .exq { font-size: 13.5px; line-height: 1.6; }
+.exercise .exa { margin-top: 7px; padding-top: 7px; font-size: 13px; line-height: 1.6; }
+.exercise .exbtn { margin-top: 7px; padding: 4px 12px; }
