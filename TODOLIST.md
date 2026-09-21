@@ -232,7 +232,7 @@ L?-??-<slug>/
   - 讲解：完整传播流水线内部顺序（user priority → op priority → aggressive → basic）；函数去重选项影响
   - 验收：能说明为何单独跑 `-sdy-basic-propagate` 与跑完整 pipeline 结果不同
 
-- [ ] **L2-12 `propagation-debugging`** — P0 ★ 实用课
+- [x] **L2-12 `propagation-debugging`** — P0 ★ 实用课
   - 覆盖（2）：`debugging/test/edge_shardings` `debugging/test/sharding_origins`
   - 讲解：`debug-sharding-origins` 与 `debug-edge-source-sharding` 输出怎么读；
     做成"分片来源追溯"动画：每个张量的分片可点开看它从哪来
