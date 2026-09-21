@@ -196,6 +196,7 @@ animation/
 | [`L4-10`](L4-export/L4-10-optimize-collectives/) | 通信优化（6 幕） | 2 | ✅ |
 | [`L4-11`](L4-export/L4-11-per-instruction-partitioning/) | 逐指令分区（6 幕） | 3 | ✅ |
 | [`L4-12`](L4-export/L4-12-export-named-computations/) | 导出命名计算（6 幕） | 1 | ✅ |
+| [`L4-13`](L4-export/L4-13-call-graph-flatten-unflatten/) | 调用图还原（6 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

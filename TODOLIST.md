@@ -386,7 +386,7 @@ L?-??-<slug>/
   - 讲解：`named_computation` 反向 outline 成函数 + call，并保留分片
   - 验收：能预测 outline 后的函数签名
 
-- [ ] **L4-13 `call-graph-flatten-unflatten`** — P2
+- [x] **L4-13 `call-graph-flatten-unflatten`** — P2
   - 覆盖（2）：`unflatten_call_graph` `unflatten_call_graph_dedup_functions_fully_true`
   - 讲解：按 in/out 分片去重函数；`dedup-functions-fully` 的取舍
   - 验收：能判断两个函数在给定选项下是否会被合并
