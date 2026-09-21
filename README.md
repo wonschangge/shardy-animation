@@ -152,6 +152,7 @@ animation/
 | [`L1-03`](L1-ir/L1-03-tensor-sharding-verification/) | 分片校验不变量（33 类错误 / 9 幕） | 1 | ✅ |
 | [`L1-04`](L1-ir/L1-04-edge-sharding/) | 边分片与传播调试信息 `propagation_edges`（7 幕） | 2 | ✅ |
 | [`L1-05`](L1-ir/L1-05-op-sharding-rule/) | 算子分片规则 `op_sharding_rule`（9 幕） | 3 | ✅ |
+| [`L1-06`](L1-ir/L1-06-collectives/) | 集合通信算子（8 个 / 10 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
