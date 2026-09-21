@@ -175,6 +175,7 @@ animation/
 | [`L3-02`](L3-import/L3-02-constant-splitter/) | 常量与标量拆分（6 幕，1782 行） | 1 | ✅ |
 | [`L3-03`](L3-import/L3-03-apply-sharding-constraints/) | 应用分片约束（6 幕） | 2 | ✅ |
 | [`L3-04`](L3-import/L3-04-add-data-flow-edges/) | 插入数据流边（6 幕） | 1 | ✅ |
+| [`L3-05`](L3-import/L3-05-add-func-data-flow-edges/) | 插入函数级数据流边（6 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

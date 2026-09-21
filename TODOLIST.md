@@ -267,7 +267,7 @@ L?-??-<slug>/
   - 讲解：为每个数据流边拥有者插入 `sdy.data_flow_edge`；已有分片如何被继承
   - 验收：能预测插入后 IR 的结构
 
-- [ ] **L3-05 `add-func-data-flow-edges`** — P1
+- [x] **L3-05 `add-func-data-flow-edges`** — P1
   - 覆盖（1）：`add_func_data_flow_edges`
   - 讲解：函数参数与调用结果的边；为跨函数传播铺路
   - 验收：能说出 func 边与普通边的区别
