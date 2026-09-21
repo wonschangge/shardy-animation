@@ -182,8 +182,20 @@ func.func @shard_reduction_dim_is_collapsed(
   // CHECK: %[[SEL:.*]] = stablehlo.select %[[MASK_BCAST]], %[[GATHER]], %[[ZERO]] : tensor<2x10xi1>, tensor<2x10xf32>
 ```
 
-**第 ⑦ 步：`select` 填零** ——
-**不属于我的位置填 0**（因为 `all_reduce` 用加法，填 0 不影响结果）。
+**第 ⑦ 步：`select` 填充** ——
+**不属于我的位置填「该归约的单位元」**（本用例是 `sum`，故填 0）。
+
+> **★ 修正（L6-05 实测）**：这里原本写"填 0"。**L6-05 用 `sdy_opt` 复现了
+> `min` / `max` 两个变体**，发现填充值**不是固定的 0**，而是**归约的单位元**：
+>
+> | 归约 | 填充值 |
+> |---|---|
+> | `sum` | `0`（本用例） |
+> | `min` | **`+∞`**（`dense<0x7F800000>`） |
+> | `max` | **`−∞`**（`dense<0xFF800000>`） |
+>
+> 因为 `min(0, 3) = 0` ≠ `3` —— 用 `sum` 的 0 去配 `min` 归约会**出错**。
+> 通用表述见 **L5-09**："填充值必须是该运算的**单位元**"。
 
 ```mlir
   // CHECK: %[[RES:.*]] = "stablehlo.all_reduce"(%[[SEL]])
@@ -212,7 +224,8 @@ func.func @shard_reduction_dim_is_collapsed(
 | ⑦ | `select` + 0 | **不属于我的填零** |
 | ⑧ | `all_reduce` | 合并部分结果 |
 
-**为什么填零是安全的**：`all_reduce` 用**加法** —— 填 0 不影响和。
+**为什么填 0 对 `sum` 是安全的**：`all_reduce` 用**加法**，而 `0` 是加法单位元
+—— 填 0 不影响和。（**但换成 `min`/`max` 归约就不行了**，见上方的修正框。）
 
 **这比 L5-04 的 iota 复杂得多**：iota 只需平移（每台设备都有对应的序号），
 而 gather 的索引**可能指向任何设备** → 必须用 mask 排除。
