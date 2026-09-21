@@ -117,6 +117,11 @@ python3 tools/check_render.py <课件路径>  # C 组：渲染质量
 - 展示 FileCheck 变量（`%[[X]]`）时必须显式标注"这是测试变量，非字面 IR"。
 - **已知易错点**：不存在 `mpmd.mesh` 这个 op（mesh 只在 `#mpmd.topology` 属性与
   `!mpmd.mesh_tensor` 类型里）。凡涉及 mesh 的表述必须复核。
+- **测试文件里的注释不一定是真的**：`// CHECK: x` 是 FileCheck 指令，`// CHECK x`
+  （缺冒号）只是普通注释，永远不会被检查。上游测试里存在引用已删除属性的过时注释
+  （L1-09 实测到一例：`type=AS`）。
+  **凡"测试文件里写着但没见过实际输出"的语法，必须跑一遍 `sdy_opt` 确认**，
+  不能只凭测试文件推断。
 
 ---
 
