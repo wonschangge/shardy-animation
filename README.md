@@ -173,6 +173,7 @@ animation/
 | — | **L2 层完成**：12 课 / 18 文件 | 18 | ✅ |
 | [`L3-01`](L3-import/L3-01-import-pipeline-overview/) | 导入流水线总览（6 幕） | 1 | ✅ |
 | [`L3-02`](L3-import/L3-02-constant-splitter/) | 常量与标量拆分（6 幕，1782 行） | 1 | ✅ |
+| [`L3-03`](L3-import/L3-03-apply-sharding-constraints/) | 应用分片约束（6 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

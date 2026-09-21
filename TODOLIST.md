@@ -257,7 +257,7 @@ L?-??-<slug>/
     常量子计算的递归定义；标量扩展；为什么标量张量不参与拆分
   - 验收：给定共用常量的程序，指出哪些常量子计算会被拆成几份
 
-- [ ] **L3-03 `apply-sharding-constraints`** — P0
+- [x] **L3-03 `apply-sharding-constraints`** — P0
   - 覆盖（2）：`apply_sharding_constraints` `apply_sharding_constraints_preinlined`
   - 讲解：把 constraint 分片**真正写进输入张量**的三个条件；数据流边目标时的特殊处理；constraint 链的替换规则
   - 验收：能判断某条 constraint 会被"落实"还是"留给传播"
