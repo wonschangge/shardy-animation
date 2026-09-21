@@ -345,7 +345,7 @@ L?-??-<slug>/
   - 讲解：归约类的 replica 组语义；sort 的被排序维必须全复制；RNG 的特殊约束
   - 验收：能说出 sort 为什么需要 need_replication 因子
 
-- [ ] **L4-06 `reshard-memory-ops`** — P1
+- [x] **L4-06 `reshard-memory-ops`** — P1
   - 覆盖（3）：`insert_explicit_reshards/gather_scatter` `custom_call` `collective_ops`
   - 讲解：访存类与自定义调用；集合通信算子自身的 reshard 处理
   - 验收：能判断 custom_call 的分片传播边界

@@ -188,6 +188,7 @@ animation/
 | [`L4-03`](L4-export/L4-03-reshard-elementwise-shape/) | 逐元素与形状类的 reshard（6 幕） | 9 | ✅ |
 | [`L4-04`](L4-export/L4-04-reshard-matmul-conv/) | 矩阵与卷积类的 reshard（6 幕） | 4 | ✅ |
 | [`L4-05`](L4-export/L4-05-reshard-reduction/) | 归约与排序类的 reshard（7 幕） | 4 | ✅ |
+| [`L4-06`](L4-export/L4-06-reshard-memory-ops/) | 访存与通信类的 reshard（6 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
