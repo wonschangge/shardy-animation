@@ -404,7 +404,7 @@ L?-??-<slug>/
     为什么要移除输入输出上的子轴
   - 验收：给一段 IR，说出该跑哪几个收尾 pass、顺序如何
 
-- [ ] **L4-16 `sink-and-convert`** — P1
+- [x] **L4-16 `sink-and-convert`** — P1
   - 覆盖（3）：`sink_data_flow_edges` `sink_func_data_flow_edges` `sharding_constraint_to_reshard`
   - 讲解：把边分片"下沉"到输入张量并删除边 op；constraint → reshard
   - 验收：能预测下沉后分片落在哪个值上

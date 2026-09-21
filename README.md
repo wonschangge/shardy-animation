@@ -199,6 +199,7 @@ animation/
 | [`L4-13`](L4-export/L4-13-call-graph-flatten-unflatten/) | 调用图还原（6 幕） | 2 | ✅ |
 | [`L4-14`](L4-export/L4-14-single-device-and-unreduced/) | 单设备与未归约（6 幕） | 3 | ✅ |
 | [`L4-15`](L4-export/L4-15-export-finalize/) | 导出收尾（P0，6 幕） | 7 | ✅ |
+| [`L4-16`](L4-export/L4-16-sink-and-convert/) | 边下沉与转换（6 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
