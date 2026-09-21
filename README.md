@@ -183,7 +183,8 @@ animation/
 | [`L3-10`](L3-import/L3-10-misc-import-cleanup/) | 杂项导入清理（6 幕） | 3 | ✅ |
 | [`L3-11`](L3-import/L3-11-gather-scatter-batching/) | gather/scatter 批维显式化（6 幕） | 6 | ✅ |
 | — | **L3 层完成**：11 课 / 26 文件 | 26 | ✅ |
-| L4-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：导出流水线 | | ⬜ |
+| [`L4-01`](L4-export/L4-01-export-pipeline-overview/) | 导出流水线总览（6 幕） | 2 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 

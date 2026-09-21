@@ -317,7 +317,7 @@ L?-??-<slug>/
 + `export/test/optimize_collectives/`(2) + `export/test/resolve_permutation_factors/`(1) — **61 文件 / 16,271 行** ← 最大一层
 **前置**：L1、L2
 
-- [ ] **L4-01 `export-pipeline-overview`** — P0
+- [x] **L4-01 `export-pipeline-overview`** — P0
   - 覆盖（2）：`export_pipeline` `export_pipeline_explicit_collectives`
   - 讲解：导出流水线全貌与两条分支（是否显式插入 collective）；总览动画，后续每课回指本课
   - 验收：能画出导出流水线的 pass 顺序图
