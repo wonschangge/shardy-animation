@@ -221,7 +221,9 @@ animation/
 | [`L6-06`](L6-execution/L6-06-exec-pad/) | pad 的执行（P0 ★，6 幕） | 19 | ✅ |
 | [`L6-07`](L6-execution/L6-07-exec-reshape/) | reshape 的执行（P0，5 幕） | 7 | ✅ |
 | [`L6-08`](L6-execution/L6-08-exec-reverse-slice/) | reverse/slice 的执行（5 幕） | 9 | ✅ |
-| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
+| [`L6-09`](L6-execution/L6-09-exec-scatter-and-misc/) | scatter 与杂项（5 幕） | 7 | ✅ |
+| — | **L6 层完成**：10 课 | 74 | ✅ |
+| L7-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：综合实战 | | ⬜ |
 
 ---
 

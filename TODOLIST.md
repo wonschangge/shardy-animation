@@ -560,7 +560,7 @@ L?-??-<slug>/
   - 讲解：reverse 的分片；slice 在"免通信 / 需通信"之间的分界
   - 验收：能判断某个 slice 是否需要通信
 
-- [ ] **L6-09 `exec-scatter-and-misc` — P1
+- [x] **L6-09 `exec-scatter-and-misc` — P1
   - 覆盖（7）：`executable_convert_global_to_local/stablehlo_scatter_replicated_bounds`
     `stablehlo_scatter_shard_implicit_dim` `stablehlo_scatter_shard_indexed_inserted_dim`
     `stablehlo_select_and_scatter` `stablehlo_concatenate` `stablehlo_reduce_window` `stablehlo_sort`
