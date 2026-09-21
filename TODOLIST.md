@@ -262,7 +262,7 @@ L?-??-<slug>/
   - 讲解：把 constraint 分片**真正写进输入张量**的三个条件；数据流边目标时的特殊处理；constraint 链的替换规则
   - 验收：能判断某条 constraint 会被"落实"还是"留给传播"
 
-- [ ] **L3-04 `add-data-flow-edges`** — P1
+- [x] **L3-04 `add-data-flow-edges`** — P1
   - 覆盖（1）：`add_data_flow_edges`
   - 讲解：为每个数据流边拥有者插入 `sdy.data_flow_edge`；已有分片如何被继承
   - 验收：能预测插入后 IR 的结构
