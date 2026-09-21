@@ -1,0 +1,251 @@
+/* ==========================================================================
+   Shardy 入门动画 — 样式表
+   舞台固定 1280x720，由 JS 缩放以适配任意窗口，保证排版一致。
+   ========================================================================== */
+
+:root{
+  --bg0:#080c18;
+  --bg1:#0d1428;
+  --panel:rgba(255,255,255,.045);
+  --panel-brd:rgba(255,255,255,.10);
+  --ink:#e8eefc;
+  --ink-dim:#93a3c4;
+  --ink-faint:#5d6d8f;
+  --accent:#5eead4;
+  --accent2:#818cf8;
+  --warn:#fbbf24;
+  --bad:#fb7185;
+  --ok:#4ade80;
+  /* 网格轴配色（由 JS 通过 axcN 类使用） */
+  --ax0:#38bdf8;
+  --ax1:#c084fc;
+  --ax2:#fbbf24;
+  --ax3:#fb7185;
+  --ax4:#4ade80;
+  --ax5:#f472b6;
+  --mono:"SFMono-Regular",Menlo,Consolas,"DejaVu Sans Mono","Noto Sans Mono CJK SC",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:radial-gradient(1200px 800px at 20% -10%,#16224a 0%,var(--bg1) 45%,var(--bg0) 100%);
+  color:var(--ink);font-family:var(--sans);overflow:hidden;
+}
+
+/* ---------- 舞台与缩放 ---------- */
+#app{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{
+  width:1280px;height:720px;position:relative;flex:none;
+  display:grid;grid-template-rows:auto 1fr auto;
+  grid-template-columns:1fr 420px;
+  grid-template-areas:"hdr hdr" "visual side" "ftr ftr";
+  gap:14px 20px;padding:26px 30px 14px;
+  transform-origin:center center;
+}
+#hdr{grid-area:hdr}
+#visual{grid-area:visual;position:relative;min-width:0;min-height:0}
+#side{
+  grid-area:side;display:flex;flex-direction:column;gap:8px;min-height:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+  border:1px solid var(--panel-brd);border-radius:14px;padding:12px 14px;overflow:hidden;
+}
+#ftr{grid-area:ftr;display:flex;flex-direction:column;gap:8px}
+
+/* ---------- 头部 ---------- */
+#scene-kicker{
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);
+  font-weight:700;margin-bottom:6px;
+}
+#scene-title{margin:0;font-size:36px;line-height:1.14;font-weight:800;letter-spacing:-.01em}
+#scene-sub{margin:7px 0 0;font-size:16px;color:var(--ink-dim);line-height:1.45;max-width:1020px}
+
+/* ---------- 侧栏代码 ---------- */
+#side-cap{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);
+  font-weight:700;flex:none;
+}
+#code{
+  margin:0;flex:1;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.62;
+  white-space:pre;color:#cfe0ff;tab-size:2;
+}
+#code .com{color:#5d7290;font-style:italic}
+#code .kw{color:#c084fc}
+#code .at{color:#5eead4}
+#code .st{color:#fbbf24}
+#code .nm{color:#7dd3fc}
+#code .hl{background:rgba(94,234,212,.16);border-radius:3px;padding:0 2px}
+#code .del{color:#fb7185}
+#code .add{color:#4ade80}
+
+/* ---------- 底部 ---------- */
+#dots{display:flex;gap:5px;flex-wrap:wrap}
+.dot{width:16px;height:5px;border-radius:3px;background:rgba(255,255,255,.16);cursor:pointer;transition:.25s}
+.dot:hover{background:rgba(255,255,255,.36)}
+.dot.on{background:var(--accent);width:30px}
+#caption{font-size:13px;color:var(--ink-dim);min-height:18px}
+
+/* ---------- 控制条 ---------- */
+#controls{
+  position:fixed;left:50%;bottom:10px;transform:translateX(-50%);
+  display:flex;align-items:center;gap:9px;padding:7px 13px;border-radius:999px;
+  background:rgba(10,16,34,.86);border:1px solid var(--panel-brd);backdrop-filter:blur(10px);
+  opacity:.24;transition:opacity .3s;z-index:50;
+}
+#controls:hover{opacity:1}
+#controls button{
+  background:rgba(255,255,255,.07);color:var(--ink);border:1px solid var(--panel-brd);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:12px;line-height:1;
+  display:flex;align-items:center;justify-content:center;transition:.18s;
+}
+#controls button:hover{background:var(--accent);color:#06231f;border-color:var(--accent)}
+#counter{font-size:12px;color:var(--ink-dim);font-family:var(--mono);min-width:56px;text-align:center}
+#progress{width:190px;height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}
+#progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+/* ==========================================================================
+   通用可视元件
+   ========================================================================== */
+
+/* 幕布：每幕的绝对定位容器 */
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.scene-inner{width:100%;display:flex;align-items:center;justify-content:center;gap:26px}
+
+/* 卡片 / 面板 */
+.card{
+  background:var(--panel);border:1px solid var(--panel-brd);border-radius:12px;padding:12px 14px;
+}
+.card h4{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint)}
+.card-t{font-size:15px;font-weight:700;margin-bottom:4px}
+.card-d{font-size:12.5px;color:var(--ink-dim);line-height:1.5}
+
+/* 轴标签 chip */
+.chip{
+  display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:7px;
+  font-family:var(--mono);font-size:13px;font-weight:700;line-height:1.35;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);white-space:nowrap;
+}
+.chip .sw{width:9px;height:9px;border-radius:2px;background:var(--c,var(--accent))}
+.axc0{--c:var(--ax0)} .axc1{--c:var(--ax1)} .axc2{--c:var(--ax2)}
+.axc3{--c:var(--ax3)} .axc4{--c:var(--ax4)} .axc5{--c:var(--ax5)}
+.chip.c0{color:var(--ax0);border-color:color-mix(in srgb,var(--ax0) 55%,transparent);background:color-mix(in srgb,var(--ax0) 14%,transparent)}
+.chip.c1{color:var(--ax1);border-color:color-mix(in srgb,var(--ax1) 55%,transparent);background:color-mix(in srgb,var(--ax1) 14%,transparent)}
+.chip.c2{color:var(--ax2);border-color:color-mix(in srgb,var(--ax2) 55%,transparent);background:color-mix(in srgb,var(--ax2) 14%,transparent)}
+.chip.c3{color:var(--ax3);border-color:color-mix(in srgb,var(--ax3) 55%,transparent);background:color-mix(in srgb,var(--ax3) 14%,transparent)}
+.chip.c4{color:var(--ax4);border-color:color-mix(in srgb,var(--ax4) 55%,transparent);background:color-mix(in srgb,var(--ax4) 14%,transparent)}
+.chip.c5{color:var(--ax5);border-color:color-mix(in srgb,var(--ax5) 55%,transparent);background:color-mix(in srgb,var(--ax5) 14%,transparent)}
+.chip.mut{color:var(--ink-faint);border-style:dashed}
+
+/* 设备网格 */
+.mesh{display:grid;gap:10px}
+.dev{
+  position:relative;border-radius:11px;border:1.5px solid var(--c,var(--accent));
+  background:linear-gradient(160deg,color-mix(in srgb,var(--c,var(--accent)) 26%,transparent),color-mix(in srgb,var(--c,var(--accent)) 7%,transparent));
+  display:flex;align-items:center;justify-content:center;transition:.35s;
+  box-shadow:0 0 0 0 transparent;
+}
+.dev .dev-id{
+  position:absolute;top:4px;left:7px;font-family:var(--mono);font-size:10px;color:var(--ink-faint)
+}
+.dev.pop{animation:devpop .5s cubic-bezier(.3,1.6,.5,1)}
+.dev.lit{box-shadow:0 0 0 3px color-mix(in srgb,var(--c,var(--accent)) 40%,transparent),0 0 22px color-mix(in srgb,var(--c,var(--accent)) 45%,transparent)}
+@keyframes devpop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+
+/* 张量网格 */
+.tgrid{display:grid;gap:2px;padding:7px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid var(--panel-brd)}
+.tcell{
+  border-radius:3px;background:rgba(255,255,255,.09);transition:background .45s,transform .45s,opacity .45s;
+}
+.tcell.lbl{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.75)}
+.tgrid.dim{opacity:.34}
+.tgrid.gone{opacity:0;transform:scale(.86)}
+
+/* 分片闸刀线 */
+.cut-wrap{position:relative}
+.cut{position:absolute;background:var(--warn);border-radius:2px;opacity:0}
+.cut.v{width:3px;top:-6px;bottom:-6px}
+.cut.h{height:3px;left:-6px;right:-6px}
+.cut.on{opacity:.95;animation:cutpulse 1.1s ease-in-out infinite}
+@keyframes cutpulse{50%{opacity:.4}}
+
+/* 文字辅助 */
+.mono{font-family:var(--mono)}
+.dim{color:var(--ink-dim)}
+.faint{color:var(--ink-faint)}
+.big{font-size:30px;font-weight:800}
+.small{font-size:12px}
+.mid{font-size:14px}
+.center{text-align:center}
+.hl-a{color:var(--accent)}
+.hl-b{color:var(--accent2)}
+.hl-w{color:var(--warn)}
+
+/* 流程箭头 */
+.flow{display:flex;align-items:center;gap:12px}
+.arrow{color:var(--ink-faint);font-size:22px;line-height:1}
+.arrow.anim{animation:slide 1.2s ease-in-out infinite}
+@keyframes slide{0%,100%{transform:translateX(-4px);opacity:.45}50%{transform:translateX(4px);opacity:1}}
+
+/* 竖向堆叠 */
+.col{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;align-items:center;gap:14px}
+.wrap{flex-wrap:wrap}
+
+/* 公式条 */
+.formula{
+  font-family:var(--mono);font-size:14px;padding:9px 14px;border-radius:9px;
+  background:rgba(94,234,212,.09);border:1px solid rgba(94,234,212,.3);color:#bdf7ec;
+}
+.formula.warn{background:rgba(251,191,36,.09);border-color:rgba(251,191,36,.32);color:#fde9b4}
+
+/* 因子表 */
+table.ftable{border-collapse:collapse;font-family:var(--mono);font-size:13px}
+table.ftable th,table.ftable td{border:1px solid rgba(255,255,255,.13);padding:5px 11px;text-align:center}
+table.ftable th{background:rgba(255,255,255,.06);color:var(--ink-dim);font-weight:600;font-size:11.5px}
+table.ftable td.na{color:var(--ink-faint);background:rgba(0,0,0,.22)}
+table.ftable td.ax{font-weight:700}
+table.ftable tr.t0 td:first-child{color:var(--ax0)}
+table.ftable td.chg{background:rgba(94,234,212,.16);color:#a7f3e4}
+
+/* 层级金字塔 */
+.pyr{display:flex;flex-direction:column;gap:7px;align-items:center}
+.pyr-lvl{
+  border-radius:9px;padding:9px 16px;text-align:center;border:1px solid var(--panel-brd);
+  background:var(--panel);transition:.35s;opacity:.42;
+}
+.pyr-lvl.on{opacity:1;transform:scale(1.035);border-color:var(--accent);box-shadow:0 0 20px rgba(94,234,212,.2)}
+.pyr-lvl .pt{font-weight:700;font-size:14.5px}
+.pyr-lvl .pd{font-size:11.5px;color:var(--ink-dim);margin-top:2px}
+
+/* 集合通信动画舞台 */
+.coll{display:flex;flex-direction:column;align-items:center;gap:14px}
+.chunk{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;font-weight:700;color:#08111f;transition:.5s}
+
+/* 流水线三段 */
+.pipe{display:flex;align-items:stretch;gap:0}
+.pipe-seg{flex:1;border:1px solid var(--panel-brd);background:var(--panel);padding:12px 14px;position:relative}
+.pipe-seg:first-child{border-radius:12px 0 0 12px}
+.pipe-seg:last-child{border-radius:0 12px 12px 0}
+.pipe-seg.on{background:rgba(94,234,212,.13);border-color:rgba(94,234,212,.5)}
+.pipe-seg .pn{font-size:11px;letter-spacing:.14em;color:var(--accent);font-weight:700}
+.pipe-seg .pt{font-size:15px;font-weight:700;margin:3px 0 6px}
+.pipe-seg .pl{font-family:var(--mono);font-size:11px;color:var(--ink-dim);line-height:1.7}
+
+/* 进入动画 */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.anim-in{animation:fadeUp .55s cubic-bezier(.22,1,.36,1) both}
+.anim-fade{animation:fadeIn .6s both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+.d4{animation-delay:.32s}.d5{animation-delay:.40s}.d6{animation-delay:.48s}
+.d7{animation-delay:.56s}.d8{animation-delay:.64s}
+
+/* 数据流脉冲点 */
+@keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
+.pulse{animation:pulse 1.5s ease-in-out infinite}
+
+/* 滚动条 */
+#code::-webkit-scrollbar{width:7px;height:7px}
+#code::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:4px}
