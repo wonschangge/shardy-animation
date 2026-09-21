@@ -322,7 +322,7 @@ L?-??-<slug>/
   - 讲解：导出流水线全貌与两条分支（是否显式插入 collective）；总览动画，后续每课回指本课
   - 验收：能画出导出流水线的 pass 顺序图
 
-- [ ] **L4-02 `reshard-insertion-overview`** — P0 ★ 本节总纲
+- [x] **L4-02 `reshard-insertion-overview`** — P0 ★ 本节总纲
   - 覆盖（2）：`insert_explicit_reshards` `insert_func_call_reshards`
   - 讲解：**为什么需要插入 reshard**：传播后某些算子仍"分片不兼容"，
     需要显式 reshard 让每个算子"对应维同分片、每个轴只切一种维度"；
