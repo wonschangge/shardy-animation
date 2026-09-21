@@ -391,7 +391,7 @@ L?-??-<slug>/
   - 讲解：按 in/out 分片去重函数；`dedup-functions-fully` 的取舍
   - 验收：能判断两个函数在给定选项下是否会被合并
 
-- [ ] **L4-14 `single-device-and-unreduced`** — P1
+- [x] **L4-14 `single-device-and-unreduced`** — P1
   - 覆盖（3）：`resolve_single_device_sharding` `verify_unreduced_axes` `remove_ag_rs_for_cmv1`
   - 讲解：单设备分片降级为 `stablehlo.if` 按设备号守卫；未归约轴一致性校验；CMV1 兼容性移除
   - 验收：能说出 unreduced 轴从哪来、必须在哪被消除

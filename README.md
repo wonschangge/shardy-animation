@@ -197,6 +197,7 @@ animation/
 | [`L4-11`](L4-export/L4-11-per-instruction-partitioning/) | 逐指令分区（6 幕） | 3 | ✅ |
 | [`L4-12`](L4-export/L4-12-export-named-computations/) | 导出命名计算（6 幕） | 1 | ✅ |
 | [`L4-13`](L4-export/L4-13-call-graph-flatten-unflatten/) | 调用图还原（6 幕） | 2 | ✅ |
+| [`L4-14`](L4-export/L4-14-single-device-and-unreduced/) | 单设备与未归约（6 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
