@@ -567,10 +567,11 @@ L?-??-<slug>/
   - 讲解：scatter 三种分片形态；其余算子收尾
   - 验收：能解释 scatter 隐式维与显式维分片的区别
 
-- [ ] **L6-10 `exec-single-device-and-alltoall`** — P2
+- [x] **L6-10 `exec-single-device-and-alltoall`** — P2
   - 覆盖（4）：`executable_partitioner_pipeline/single_device_add` `single_device_switch`
     `sdy_all_to_all_fully_scattered` `sdy_all_to_all_partially_scattered`
   - 讲解：单设备守卫的数值验证；all-to-all 优化的端到端验证
+  - 注：本课为这 4 个文件的**主课**（L7-01 亦引用它们，但视角为「端到端时间轴」）
   - 验收：能说明单设备分片如何被执行
 
 ---

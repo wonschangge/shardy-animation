@@ -222,7 +222,8 @@ animation/
 | [`L6-07`](L6-execution/L6-07-exec-reshape/) | reshape 的执行（P0，5 幕） | 7 | ✅ |
 | [`L6-08`](L6-execution/L6-08-exec-reverse-slice/) | reverse/slice 的执行（5 幕） | 9 | ✅ |
 | [`L6-09`](L6-execution/L6-09-exec-scatter-and-misc/) | scatter 与杂项（5 幕） | 7 | ✅ |
-| — | **L6 层完成**：10 课 | 74 | ✅ |
+| [`L6-10`](L6-execution/L6-10-exec-single-device-and-alltoall/) | 单设备与 all-to-all（P2，5 幕） | 4 | ✅ |
+| — | **L6 层完成**：11 课 | 78 | ✅ |
 | [`L7-01`](L7-practice/L7-01-end-to-end-walkthrough/) | 端到端走查（P0，5 幕） | 4 | ✅ |
 | [`L7-02`](L7-practice/L7-02-parallelism-strategies/) | 并行策略（P0，6 幕） | 引用 2 | ✅ |
 | [`L7-03`](L7-practice/L7-03-debugging-playbook/) | 调试手册（P0，6 幕） | 4 | ✅ |
