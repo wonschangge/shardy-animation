@@ -438,7 +438,7 @@ L?-??-<slug>/
   - 讲解：SDY 结构算子如何就地降级（常量按分片裁剪、named 内联、manual 直接展开为局部代码）
   - 验收：能预测 manual_computation 展开后的形状
 
-- [ ] **L5-04 `lowering-elementwise-shape`** — P1
+- [x] **L5-04 `lowering-elementwise-shape`** — P1
   - 覆盖（4）：`convert_global_to_local/stablehlo_concatenate` `stablehlo_iota` `stablehlo_slice` `stablehlo_pad`
   - 讲解：形状类算子在分片下的局部化；pad 的边界处理
   - 验收：能对某个 slice 分片场景算出局部 slice 参数
