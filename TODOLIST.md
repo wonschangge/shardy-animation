@@ -282,7 +282,7 @@ L?-??-<slug>/
   - 讲解：内联 `MeshAttr` 提升为 `sdy.mesh` 符号；去重与命名规则（`maximal_mesh_{id}` / `mesh` / `mesh_N`）
   - 验收：能预测新 mesh 的符号名
 
-- [ ] **L3-08 `manual-axes-cleanup`** — P2
+- [x] **L3-08 `manual-axes-cleanup`** — P2
   - 覆盖（2）：`manual_axes_cleanup` `manual_axes_cleanup_failures`
   - 讲解：补齐 in/out sharding 中缺失的 manual 轴到 replicated；按网格序排序；空 region 报错
   - 验收：能指出哪条 IR 会触发报错以及为什么
