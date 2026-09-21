@@ -101,19 +101,19 @@ L?-??-<slug>/
 **覆盖**：`ir/test/` — 28 文件 / 5,048 行
 **前置**：`intro/` 第 3～9 幕
 
-- [ ] **L1-01 `mesh-and-devices`** — P0
+- [x] **L1-01 `mesh-and-devices`** — P0
   - 覆盖（2）：`mesh_parse_print` `mesh_verification`
   - 讲解：命名轴；`device_ids` 自定义设备顺序；空网格 `<[]>`；maximal-sharding 网格 `<[], device_ids=[3]>`；
     为什么 `product(axis_sizes)` 必须等于设备数；报错 `duplicate axis name: "a"`、`total product of axis sizes must match total number of device ids, got: 4 != 6`
   - 验收：能解释 `<["a"=3,"b"=2], device_ids=[0,2,4,1,3,5]>` 与 `<["a"=3,"b"=2]>` 的语义差别
 
-- [ ] **L1-02 `tensor-sharding-syntax`** — P0
+- [x] **L1-02 `tensor-sharding-syntax`** — P0
   - 覆盖（2）：`tensor_sharding_parse_print` `tensor_sharding_parsing_failure`
   - 讲解：`#sdy.sharding` 完整语法 → 维分片 / 开闭维 `?` / `replicated=` / `unreduced=` / `reduction_op`；
     子轴 `"x":(2)4` 的 pre-size 语义；优先级 `[{"a"}p0, {"b"}p1]`；解析失败的信息如何定位
   - 验收：给定 `[{"a"}, {"b":(2)2}] replicated={"c"}`，能算出局部形状并判断是否合法
 
-- [ ] **L1-03 `tensor-sharding-verification`** — P0
+- [x] **L1-03 `tensor-sharding-verification`** — P0
   - 覆盖（1）：`tensor_sharding_verification`（556 行，L1 最大）
   - 讲解：按错误类别组织动画：重复轴 `duplicate axis ref: "a"`、
     相邻子轴可合并 `two consecutive sub-axes can be merged: "a":(2)2, "a":(4)4`、
@@ -121,31 +121,31 @@ L?-??-<slug>/
     维度 0 不可分片、replicated/unreduced 的排序要求
   - 验收：给 5 段非法 sharding，各自说出违反哪条不变量
 
-- [ ] **L1-04 `edge-sharding`** — P1
+- [x] **L1-04 `edge-sharding`** — P1
   - 覆盖（2）：`edge_sharding_parse_print` `edge_sharding_verification`
   - 讲解：边分片用途（记录分片由哪个 operand/result 引入），与 `debug-edge-source-sharding` 的关系；为 L2-12 铺垫
   - 验收：能说明边分片与张量分片的区别及使用场景
 
-- [ ] **L1-05 `op-sharding-rule`** — P0
+- [x] **L1-05 `op-sharding-rule`** — P0
   - 覆盖（3）：`sharding_rule_parse_print` `sharding_rule_parsing_failure` `sharding_rule_verification`
   - 讲解：`#sdy.op_sharding_rule<([i,k],[k,j])->([i,j]) {i=8,j=16,k=8}>` 逐字段拆解；
     因子四分类（pass-through / reduction / need_replication / permutation）；
     `blocked_propagation_factors`；`is_custom_rule`；复合因子 `((ij), k)`
   - 验收：能为 `stablehlo.transpose` 手写一条正确的 sharding rule
 
-- [ ] **L1-06 `collectives`** — P0
+- [x] **L1-06 `collectives`** — P0
   - 覆盖（3）：`collective_parse_print` `collective_verification` `collective_canonicalization`
   - 讲解：6 个集合通信算子的精确语法与约束；**`out_sharding` 是推导结果而非输入**；
     规范化（all-gather 的合并与消除）；为 L4-08 铺垫
   - 验收：给定输入分片与 `gathering_axes`，能推出 `out_sharding` 并判断是否合法
 
-- [ ] **L1-07 `manual-computation`** — P1
+- [x] **L1-07 `manual-computation`** — P1
   - 覆盖（3）：`manual_computation_parse_print` `manual_computation_verification` `manual_computation_canonicalization`
   - 讲解：`manual_axes` 语义；区域内是**局部形状**；自由轴仍可传播；
     manual 轴必须在所有 in/out sharding 中显式出现（分片或显式复制）；manual 轴不得引入 padding；可嵌套
   - 验收：给定全局形状 + in_shardings + manual_axes，能算出 body 内 block argument 的类型
 
-- [ ] **L1-08 `named-computation-and-dataflow`** — P1
+- [x] **L1-08 `named-computation-and-dataflow`** — P1
   - 覆盖（4）：`named_computation_parse_print` `named_computation_verification`
     `data_flow_edge_verification` `func_data_flow_edge_verification`
   - 讲解：为什么需要 `sdy.named_computation`（传播要能穿过函数调用）；
@@ -153,14 +153,14 @@ L?-??-<slug>/
     while 的 n 条边如何划分（`x_i`/`return_value_i` → `y_i`/`pred_arg_i`/`body_arg_i`）
   - 验收：能画出 while / case / call 各自的数据流边
 
-- [ ] **L1-09 `constraint-group-barrier`** — P0
+- [x] **L1-09 `constraint-group-barrier`** — P0
   - 覆盖（4）：`sharding_constraint_verification` `sharding_group_parse_print`
     `propagation_barrier_parse_print` `propagation_barrier_verification`
   - 讲解：悬空 vs 有使用者的 `sharding_constraint`；`sdy.sharding_group ... group_id=N`；
     `allowed_direction` 三态（FORWARD/BACKWARD/NONE）；三者生命周期（谁读谁写）
   - 验收：能判断某段 IR 中 constraint 是否会"直接约束张量本身"
 
-- [ ] **L1-10 `reshard-and-constant`** — P1
+- [x] **L1-10 `reshard-and-constant`** — P1
   - 覆盖（4）：`reshard_verification` `reshard_canonicalization` `constant_parse_print` `constant_verification`
   - 讲解：`sdy.reshard` 的生命周期（传播后出现 → 分区器消灭）；
     为什么 `sdy.constant` 故意不实现 ConstantLike、不带 folder
