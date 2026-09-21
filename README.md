@@ -206,6 +206,7 @@ animation/
 | [`L5-02`](L5-lowering/L5-02-lowering-sdy-collectives/) | 集合通信降级（P0，6 幕） | 6 | ✅ |
 | [`L5-03`](L5-lowering/L5-03-lowering-sdy-structural/) | 结构算子降级（5 幕） | 3 | ✅ |
 | [`L5-04`](L5-lowering/L5-04-lowering-elementwise-shape/) | 形状类降级（5 幕） | 4 | ✅ |
+| [`L5-05`](L5-lowering/L5-05-lowering-matmul/) | 矩阵乘降级（P0，6 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
