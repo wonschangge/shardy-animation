@@ -1,0 +1,7 @@
+# Python 缓存（tools/ 脚本运行时生成）
+__pycache__/
+*.py[cod]
+
+# 编辑器 / 系统
+.DS_Store
+*.swp
