@@ -277,7 +277,7 @@ L?-??-<slug>/
   - 讲解：call → named_computation 内联；多调用点时函数体克隆；调用图展平
   - 验收：能解释同名函数被多次调用时的处理策略
 
-- [ ] **L3-07 `lift-inlined-meshes`** — P1
+- [x] **L3-07 `lift-inlined-meshes`** — P1
   - 覆盖（1）：`lift_inlined_meshes`
   - 讲解：内联 `MeshAttr` 提升为 `sdy.mesh` 符号；去重与命名规则（`maximal_mesh_{id}` / `mesh` / `mesh_N`）
   - 验收：能预测新 mesh 的符号名
