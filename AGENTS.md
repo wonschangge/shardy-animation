@@ -127,6 +127,9 @@ python3 tools/check_render.py <课件路径>  # C 组：渲染质量
   **规则**：遇到 CHECK 行夹在中间时，把签名与函数体拆成两个代码块。
   **不要手改**——直接运行 `python3 tools/split_blocks.py`（支持 `--dry-run`），
   它会自动扫描并拆分所有 `source.md`。写完 `source.md` 后先跑它，再跑保真门禁。
+  **变体**：有些文件把 CHECK 行<b>逐行穿插</b>在每个算子之间（L2-07 的
+  `shard_as_applies_despite_barrier`），这时每个算子行都必须**单独成块**——
+  工具只能拆"签名 vs 函数体"，这种情形要手工按行拆开。
 
 ---
 
