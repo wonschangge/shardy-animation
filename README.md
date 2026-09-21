@@ -167,6 +167,7 @@ animation/
 | [`L2-07`](L2-propagation/L2-07-sharding-group-propagation/) | 分片组传播（6 幕） | 1 | ✅ |
 | [`L2-08`](L2-propagation/L2-08-data-flow-edges/) | 数据流边传播（6 幕） | 2 | ✅ |
 | [`L2-09`](L2-propagation/L2-09-manual-computation-propagation/) | 手动计算的传播（7 幕） | 1 | ✅ |
+| [`L2-10`](L2-propagation/L2-10-op-sharding-rule-registry/) | 算子分片规则注册表（7 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

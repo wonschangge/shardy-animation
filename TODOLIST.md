@@ -221,7 +221,7 @@ L?-??-<slug>/
   - 讲解：传播如何**穿过** manual_computation 在自由轴上继续工作；manual 轴为何被冻结
   - 验收：给定含 manual_computation 的 IR，指出哪些轴会被继续分片
 
-- [ ] **L2-10 `op-sharding-rule-registry`** — P0 ★ 工具课
+- [x] **L2-10 `op-sharding-rule-registry`** — P0 ★ 工具课
   - 覆盖（3）：`op_sharding_rule_registry` `op_sharding_rule_registry_conservative` `op_sharding_rule_registry_failures`
   - 讲解：`-sdy-populate-op-sharding-rules` 一次性打印**所有**算子（stablehlo + sdy）的规则；
     做成可交互"规则速查表"：按算子族索引，点击看因子表
