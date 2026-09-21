@@ -227,7 +227,7 @@ L?-??-<slug>/
     做成可交互"规则速查表"：按算子族索引，点击看因子表
   - 验收：表中每个算子的规则能与 `-sdy-populate-op-sharding-rules` 实际输出对上
 
-- [ ] **L2-11 `propagation-pipeline`** — P0
+- [x] **L2-11 `propagation-pipeline`** — P0
   - 覆盖（3）：`propagation_pipeline` `propagation_pipeline_data_flow_edges` `propagation_pipeline_dedup_functions_fully_true`
   - 讲解：完整传播流水线内部顺序（user priority → op priority → aggressive → basic）；函数去重选项影响
   - 验收：能说明为何单独跑 `-sdy-basic-propagate` 与跑完整 pipeline 结果不同
