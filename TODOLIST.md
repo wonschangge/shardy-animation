@@ -329,7 +329,7 @@ L?-??-<slug>/
     兼容性判定的三个条件与插入位置的选择策略；后续 L4-03～L4-07 按算子族展开
   - 验收：给定一段传播后的 IR，能圈出所有需要插 reshard 的位置
 
-- [ ] **L4-03 `reshard-elementwise-shape`** — P0
+- [x] **L4-03 `reshard-elementwise-shape`** — P0
   - 覆盖（9）：`insert_explicit_reshards/elementwise_ops` `broadcast_in_dim` `bitcast_convert`
     `reshape` `reverse` `concatenate` `clamp_select` `pad_slice` `dynamic_slice_dynamic_update_slice`
   - 讲解：逐元素与形状变换算子的 reshard 规则；为什么 reshape 常需 reshard

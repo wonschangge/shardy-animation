@@ -185,6 +185,7 @@ animation/
 | — | **L3 层完成**：11 课 / 26 文件 | 26 | ✅ |
 | [`L4-01`](L4-export/L4-01-export-pipeline-overview/) | 导出流水线总览（6 幕） | 2 | ✅ |
 | [`L4-02`](L4-export/L4-02-reshard-insertion-overview/) | reshard 插入总纲（6 幕） | 2 | ✅ |
+| [`L4-03`](L4-export/L4-03-reshard-elementwise-shape/) | 逐元素与形状类的 reshard（6 幕） | 9 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
