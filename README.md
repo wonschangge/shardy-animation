@@ -192,6 +192,7 @@ animation/
 | [`L4-07`](L4-export/L4-07-reshard-structure/) | 结构性场景的 reshard（6 幕） | 9 | ✅ |
 | — | **L4 算子族展开完成**：7 课 / 472 用例 | 38 | ✅ |
 | [`L4-08`](L4-export/L4-08-reshard-to-collectives/) | reshard 转集合通信（★ 核心，6 幕） | 2 | ✅ |
+| [`L4-09`](L4-export/L4-09-resolve-permutation-factors/) | 置换因子消解（6 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

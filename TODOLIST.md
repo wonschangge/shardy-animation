@@ -364,7 +364,7 @@ L?-??-<slug>/
     collective-permute 的组合；"每一维分片变化 → 一种通信"对照表动画
   - 验收：给定任意 reshard 前后分片，写出对应 collective 序列
 
-- [ ] **L4-09 `resolve-permutation-factors`** — P1
+- [x] **L4-09 `resolve-permutation-factors`** — P1
   - 覆盖（2）：`resolve_permutation_factors`
     + `resolve_permutation_factors/resolve_permutation_factors_replica_id`
   - 讲解：permutation 因子（pad / reverse / 窗口类）的分片如何解析；halo exchange 开关差异；replica_id 场景
