@@ -518,7 +518,7 @@ L?-??-<slug>/
   - 讲解：matmul 数值等价；FFT 分片；iota 局部化
   - 验收：能解释 dot_general_indivisible 为何需要 padding
 
-- [ ] **L6-05 `exec-gather`** — P0 ★ 最复杂
+- [x] **L6-05 `exec-gather`** — P0 ★ 最复杂
   - 覆盖（6）：`executable_convert_global_to_local/stablehlo_gather_shard_reduction_dim_is_collapsed`
     `stablehlo_gather_shard_reduction_dim_is_collapsed_i32`
     `stablehlo_gather_shard_reduction_dim_is_collapsed_max`
