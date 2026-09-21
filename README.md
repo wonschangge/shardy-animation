@@ -212,7 +212,8 @@ animation/
 | [`L5-08`](L5-lowering/L5-08-lowering-gather-scatter/) | 访存类降级（5 幕） | 3 | ✅ |
 | [`L5-09`](L5-lowering/L5-09-pad-for-divisibility/) | 为整除性补齐（P0，6 幕） | 12 | ✅ |
 | — | **L5 层完成**：9 课 | 60 | ✅ |
-| L6-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：执行与解释器 | | ⬜ |
+| [`L6-00`](L6-execution/L6-00-executable-test-mechanism/) | 可执行测试机制（P0，6 幕） | 2(.sh) | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 

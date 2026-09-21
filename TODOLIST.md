@@ -484,7 +484,7 @@ L?-??-<slug>/
 > `stablehlo-translate --interpret` **实际执行**，要求两者结果一致。
 > 即：**用数值一致性证明分区没有改变语义**。
 
-- [ ] **L6-00 `executable-test-mechanism`** — P0
+- [x] **L6-00 `executable-test-mechanism`** — P0
   - 覆盖：`executable_convert_global_to_local/run_sdy_interpreter_test.sh`
     `executable_partitioner_pipeline/run_sdy_interpreter_test.sh`（机制说明，非 IR）
   - 讲解：`split-file` / 流水线参数 / `--interpret` 全过程动画；如何自己写一个可执行测试
