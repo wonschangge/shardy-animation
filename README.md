@@ -155,6 +155,7 @@ animation/
 | [`L1-06`](L1-ir/L1-06-collectives/) | 集合通信算子（8 个 / 10 幕） | 3 | ✅ |
 | [`L1-07`](L1-ir/L1-07-manual-computation/) | 手动计算 `manual_computation`（8 幕） | 3 | ✅ |
 | [`L1-08`](L1-ir/L1-08-named-computation-and-dataflow/) | 命名计算与数据流边（7 幕） | 4 | ✅ |
+| [`L1-09`](L1-ir/L1-09-constraint-group-barrier/) | 约束类算子 constraint/group/barrier（7 幕） | 4 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
