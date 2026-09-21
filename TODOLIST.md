@@ -272,7 +272,7 @@ L?-??-<slug>/
   - 讲解：函数参数与调用结果的边；为跨函数传播铺路
   - 验收：能说出 func 边与普通边的区别
 
-- [ ] **L3-06 `import-func-calls`** — P2
+- [x] **L3-06 `import-func-calls`** — P2
   - 覆盖（3）：`import_func_calls` `import_func_calls_add_data_flow_edges_on_named_computations_false` `flatten_call_graph`
   - 讲解：call → named_computation 内联；多调用点时函数体克隆；调用图展平
   - 验收：能解释同名函数被多次调用时的处理策略
