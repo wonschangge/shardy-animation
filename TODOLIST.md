@@ -512,7 +512,7 @@ L?-??-<slug>/
   - 讲解：卷积四种分片维度各自的正确性验证
   - 验收：能说出四种分片各自是否需要通信
 
-- [ ] **L6-04 `exec-matmul-fft-iota`** — P1
+- [x] **L6-04 `exec-matmul-fft-iota`** — P1
   - 覆盖（4）：`executable_convert_global_to_local/stablehlo_dot_general` `stablehlo_fft` `stablehlo_iota`
     + `executable_partitioner_pipeline/stablehlo_dot_general_indivisible`
   - 讲解：matmul 数值等价；FFT 分片；iota 局部化
