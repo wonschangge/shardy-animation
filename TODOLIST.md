@@ -541,7 +541,7 @@ L?-??-<slug>/
   - 讲解：padding 的分片与 **halo exchange**（多跳邻居数据交换）；"数据移动路径"动画
   - 验收：能画出某个 left_shift 场景下每台设备需要向谁要哪些数据
 
-- [ ] **L6-07 `exec-reshape`** — P0
+- [x] **L6-07 `exec-reshape`** — P0
   - 覆盖（7）：`executable_partitioner_pipeline/stablehlo_reshape_1d_to_2d_split`
     `stablehlo_reshape_1d_to_2d_split_2groups`
     `stablehlo_reshape_1d_to_2d_split_custom_device_ids`

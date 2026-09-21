@@ -219,6 +219,7 @@ animation/
 | [`L6-04`](L6-execution/L6-04-exec-matmul-fft-iota/) | 矩阵乘/FFT/iota 的执行（6 幕） | 4 | ✅ |
 | [`L6-05`](L6-execution/L6-05-exec-gather/) | gather 的执行（P0 ★，6 幕） | 6 | ✅ |
 | [`L6-06`](L6-execution/L6-06-exec-pad/) | pad 的执行（P0 ★，6 幕） | 19 | ✅ |
+| [`L6-07`](L6-execution/L6-07-exec-reshape/) | reshape 的执行（P0，5 幕） | 7 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
