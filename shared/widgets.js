@@ -217,3 +217,50 @@ const W = {
     steps.forEach((fn, i) => tl.at(start + i * stepMs, fn));
   }
 };
+
+/* ------------------------------------------------------------------ *
+ * 错误用例渲染（L1 起通用）：stepper + 违规 IR + 报错 + 根因
+ * 用法：
+ *   const wrap = W.errLayout(root);
+ *   W.errScenes(wrap, tl, [{ir, err, why}, ...], {finalIr, finalErr, finalWhy});
+ * ------------------------------------------------------------------ */
+W.errLayout = function (root) {
+  const wrap = U.el('div', { class: 'col', style: 'gap:11px;width:100%' });
+  wrap.innerHTML = `
+    <div class="row" style="gap:12px;align-items:center;justify-content:center" id="stepper"></div>
+    <div class="row" style="gap:14px;align-items:stretch;width:100%">
+      <div class="irbox in" style="flex:1.2"><div class="irh">违规 IR<span class="faint" id="cnt" style="float:right"></span></div>
+        <pre id="bad" style="min-height:120px;font-size:11.5px"></pre></div>
+      <div class="col" style="flex:1;gap:9px">
+        <div class="card" style="border-color:rgba(251,113,133,.45)">
+          <div class="card-t" style="color:var(--bad);font-size:12px">校验器报错</div>
+          <div class="card-d mono" id="err" style="font-size:11px;line-height:1.55;color:#ffc9d0"></div></div>
+        <div class="card"><div class="card-t" style="font-size:12px">为什么</div>
+          <div class="card-d" id="why" style="font-size:12.5px"></div></div>
+      </div>
+    </div>`;
+  root.appendChild(wrap);
+  return wrap;
+};
+
+W.errScenes = function (wrap, tl, cases, opts = {}) {
+  const st = W.stepper(cases.length);
+  wrap.querySelector('#stepper').appendChild(st.el);
+  const bad = wrap.querySelector('#bad'), err = wrap.querySelector('#err'),
+    why = wrap.querySelector('#why'), cnt = wrap.querySelector('#cnt');
+  const stepMs = opts.stepMs || 2400;
+  cases.forEach((c, i) => tl.at(700 + i * stepMs, () => {
+    st.set(i);
+    if (cnt) cnt.textContent = `${i + 1} / ${cases.length}`;
+    bad.innerHTML = U.hl(c.ir);
+    err.innerHTML = c.err;
+    why.innerHTML = c.why;
+  }));
+  tl.at(700 + cases.length * stepMs, () => {
+    st.set(-1);
+    bad.innerHTML = U.hl(opts.finalIr || '// 回顾：这些写法的共同问题是什么？');
+    if (cnt) cnt.textContent = '小结';
+    err.innerHTML = opts.finalErr || '';
+    why.innerHTML = opts.finalWhy || '';
+  });
+};

@@ -7,48 +7,6 @@
    ========================================================================== */
 'use strict';
 
-/* 复用的"错误用例"渲染：stepper + 错误 IR + 报错 + 根因 */
-function errScenes(wrap, tl, cases, opts = {}) {
-  const st = W.stepper(cases.length);
-  wrap.querySelector('#stepper').appendChild(st.el);
-  const bad = wrap.querySelector('#bad'), err = wrap.querySelector('#err'),
-    why = wrap.querySelector('#why'), cnt = wrap.querySelector('#cnt');
-  cases.forEach((c, i) => tl.at(700 + i * 2400, () => {
-    st.set(i);
-    if (cnt) cnt.textContent = `${i + 1} / ${cases.length}`;
-    bad.innerHTML = U.hl(c.ir);
-    err.innerHTML = c.err;
-    why.innerHTML = c.why;
-  }));
-  tl.at(700 + cases.length * 2400, () => {
-    st.set(-1);
-    bad.innerHTML = U.hl(opts.finalIr || '// 完成后回顾：这些写法的共同问题是什么？');
-    if (cnt) cnt.textContent = '小结';
-    err.innerHTML = opts.finalErr || '';
-    why.innerHTML = opts.finalWhy || '';
-  });
-}
-
-/* 错误用例场景的通用骨架 */
-function errLayout(root, title) {
-  const wrap = U.el('div', { class: 'col', style: 'gap:11px;width:100%' });
-  wrap.innerHTML = `
-    <div class="row" style="gap:12px;align-items:center;justify-content:center" id="stepper"></div>
-    <div class="row" style="gap:14px;align-items:stretch;width:100%">
-      <div class="irbox in" style="flex:1.2"><div class="irh">违规 IR<span class="faint" id="cnt" style="float:right"></span></div>
-        <pre id="bad" style="min-height:120px;font-size:11.5px"></pre></div>
-      <div class="col" style="flex:1;gap:9px">
-        <div class="card" style="border-color:rgba(251,113,133,.45)">
-          <div class="card-t" style="color:var(--bad);font-size:12px">校验器报错</div>
-          <div class="card-d mono" id="err" style="font-size:11px;line-height:1.55;color:#ffc9d0"></div></div>
-        <div class="card"><div class="card-t" style="font-size:12px">为什么</div>
-          <div class="card-d" id="why" style="font-size:12.5px"></div></div>
-      </div>
-    </div>`;
-  root.appendChild(wrap);
-  return wrap;
-}
-
 const SCENES = [
 
 /* ------------------------------------------------------ 1 两级检查 */
@@ -193,8 +151,8 @@ const SCENES = [
 [<@other_mesh, [{}, {"a"}]>]`,
   duration: 20000,
   build(root, tl) {
-    const wrap = errLayout(root);
-    errScenes(wrap, tl, [
+    const wrap = W.errLayout(root);
+    W.errScenes(wrap, tl, [
       {
         ir: '%0 = stablehlo.add %arg0, %arg1 {sdy.sharding=#sdy.sharding_per_value<[<@mesh, [{}, {"a"}], replicated={"a"}>]>} : tensor<8x8xf32>',
         err: 'duplicate axis ref: "a"',
@@ -261,8 +219,8 @@ const SCENES = [
 //   two consecutive sub-axes can be merged: "a":(2)2, "a":(4)4`,
   duration: 17000,
   build(root, tl) {
-    const wrap = errLayout(root);
-    errScenes(wrap, tl, [
+    const wrap = W.errLayout(root);
+    W.errScenes(wrap, tl, [
       {
         ir: '%0 = stablehlo.add %arg0, %arg1 {sdy.sharding=#sdy.sharding_per_value<[<@mesh, [{}, {"a":(-1)2}]>]>} : tensor<8x8xf32>',
         err: 'sub-axis pre-size must be at least 1: "a":(-1)2',
@@ -320,8 +278,8 @@ unreduced={"a", "b", "c"}        // ✗
 //   dim 1 is empty and closed but has a priority`,
   duration: 15000,
   build(root, tl) {
-    const wrap = errLayout(root);
-    errScenes(wrap, tl, [
+    const wrap = W.errLayout(root);
+    W.errScenes(wrap, tl, [
       {
         ir: '%0 = stablehlo.add %arg0, %arg1 {sdy.sharding=#sdy.sharding_per_value<[<@mesh, [{}, {}], replicated={"a", "b", "c"}>]>} : tensor<8x8xf32>',
         err: 'replicated axes are not ordered w.r.t. mesh',
@@ -377,8 +335,8 @@ func.func @f(%arg0: tensor<8x8xf32>
 //   ops can only have a sharding for a tuple of size 1`,
   duration: 16000,
   build(root, tl) {
-    const wrap = errLayout(root);
-    errScenes(wrap, tl, [
+    const wrap = W.errLayout(root);
+    W.errScenes(wrap, tl, [
       {
         ir: '%0 = stablehlo.add %arg0, %arg1 {sdy.sharding=#sdy.sharding<@mesh, [{}, {"a"}]>} : tensor<8x8xf32>',
         err: 'op should have a sharding attribute of type TensorShardingPerValueAttr',
@@ -435,8 +393,8 @@ func.func @f(%arg0: tensor<*xf32>
 //   rank 0 and no replicated or unreduced axes`,
   duration: 16000,
   build(root, tl) {
-    const wrap = errLayout(root);
-    errScenes(wrap, tl, [
+    const wrap = W.errLayout(root);
+    W.errScenes(wrap, tl, [
       {
         ir: 'func.func @token_sharding_rank_non_zero(%arg0: !stablehlo.token {sdy.sharding=#sdy.sharding<@mesh, [{}]>}) -> !stablehlo.token {',
         err: "'func.func' op arg 0 - non-shaped tensors can only have a sharding with rank 0 and no replicated or unreduced axes",
