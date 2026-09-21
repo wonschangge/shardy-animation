@@ -427,7 +427,7 @@ L?-??-<slug>/
   - 讲解：类型转换器总体思路；`replica-count` / `partition-count` 作用；`enable-rgv3` / `per-dim-all-gather` 选项
   - 验收：能算出任意 sharding 对应的局部类型
 
-- [ ] **L5-02 `lowering-sdy-collectives`** — P0
+- [x] **L5-02 `lowering-sdy-collectives`** — P0
   - 覆盖（6）：`convert_global_to_local/sdy_all_gather` `sdy_all_reduce` `sdy_all_slice`
     `sdy_all_to_all` `sdy_reduce_scatter` `sdy_collective_permute`
   - 讲解：SDY 集合通信 → StableHLO 集合通信的映射；replica group 的构造
