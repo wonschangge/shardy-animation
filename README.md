@@ -154,6 +154,7 @@ animation/
 | [`L1-05`](L1-ir/L1-05-op-sharding-rule/) | 算子分片规则 `op_sharding_rule`（9 幕） | 3 | ✅ |
 | [`L1-06`](L1-ir/L1-06-collectives/) | 集合通信算子（8 个 / 10 幕） | 3 | ✅ |
 | [`L1-07`](L1-ir/L1-07-manual-computation/) | 手动计算 `manual_computation`（8 幕） | 3 | ✅ |
+| [`L1-08`](L1-ir/L1-08-named-computation-and-dataflow/) | 命名计算与数据流边（7 幕） | 4 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
