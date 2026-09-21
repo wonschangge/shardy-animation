@@ -375,7 +375,7 @@ L?-??-<slug>/
   - 讲解：消除 all-to-all 链前的冗余 collective-permute；全散开 vs 部分散开
   - 验收：能指出哪条 permute 被消除以及为什么安全
 
-- [ ] **L4-11 `per-instruction-partitioning`** — P1
+- [x] **L4-11 `per-instruction-partitioning`** — P1
   - 覆盖（3）：`per_instruction_partitioning` `per_instruction_partitioning_range` `per_instruction_partitioning_subroutine`
   - 讲解：只对指定指令跑分区器并包进 `sdy.manual_computation`，用于 bisect；
     `filter` 语法（算子名子串 / `selectLow`/`selectHigh`/`func`）

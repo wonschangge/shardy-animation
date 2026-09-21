@@ -194,6 +194,7 @@ animation/
 | [`L4-08`](L4-export/L4-08-reshard-to-collectives/) | reshard 转集合通信（★ 核心，6 幕） | 2 | ✅ |
 | [`L4-09`](L4-export/L4-09-resolve-permutation-factors/) | 置换因子消解（6 幕） | 2 | ✅ |
 | [`L4-10`](L4-export/L4-10-optimize-collectives/) | 通信优化（6 幕） | 2 | ✅ |
+| [`L4-11`](L4-export/L4-11-per-instruction-partitioning/) | 逐指令分区（6 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
