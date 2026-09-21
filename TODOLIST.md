@@ -358,7 +358,7 @@ L?-??-<slug>/
   - ✅ 含错误用例 `single_device_sharding_errors`
   - 验收：能解释函数边界为何是 reshard 高发区
 
-- [ ] **L4-08 `reshard-to-collectives`** — P0 ★ 核心
+- [x] **L4-08 `reshard-to-collectives`** — P0 ★ 核心
   - 覆盖（2）：`reshard_to_collectives` `reshard_to_collectives_keep_redundant_reshards_true`
   - 讲解：单条 reshard 如何分解成 all-gather / all-reduce / all-slice / reduce-scatter / all-to-all /
     collective-permute 的组合；"每一维分片变化 → 一种通信"对照表动画
