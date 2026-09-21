@@ -453,7 +453,7 @@ L?-??-<slug>/
   - 讲解：卷积分片降级与 halo 处理
   - 验收：能指出卷积分片何时需要通信
 
-- [ ] **L5-07 `lowering-reduction`** — P1
+- [x] **L5-07 `lowering-reduction`** — P1
   - 覆盖（2）：`convert_global_to_local/stablehlo_reduce` `stablehlo_reduce_window`
   - 讲解：归约维分片时的局部归约 + all-reduce
   - 验收：能判断某个 reduce 是否需要通信

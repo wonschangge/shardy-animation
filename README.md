@@ -208,6 +208,7 @@ animation/
 | [`L5-04`](L5-lowering/L5-04-lowering-elementwise-shape/) | 形状类降级（5 幕） | 4 | ✅ |
 | [`L5-05`](L5-lowering/L5-05-lowering-matmul/) | 矩阵乘降级（P0，6 幕） | 2 | ✅ |
 | [`L5-06`](L5-lowering/L5-06-lowering-convolution/) | 卷积降级（6 幕） | 1 | ✅ |
+| [`L5-07`](L5-lowering/L5-07-lowering-reduction/) | 归约降级（5 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
