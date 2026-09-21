@@ -187,6 +187,7 @@ animation/
 | [`L4-02`](L4-export/L4-02-reshard-insertion-overview/) | reshard 插入总纲（6 幕） | 2 | ✅ |
 | [`L4-03`](L4-export/L4-03-reshard-elementwise-shape/) | 逐元素与形状类的 reshard（6 幕） | 9 | ✅ |
 | [`L4-04`](L4-export/L4-04-reshard-matmul-conv/) | 矩阵与卷积类的 reshard（6 幕） | 4 | ✅ |
+| [`L4-05`](L4-export/L4-05-reshard-reduction/) | 归约与排序类的 reshard（7 幕） | 4 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

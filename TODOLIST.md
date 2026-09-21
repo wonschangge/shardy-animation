@@ -340,7 +340,7 @@ L?-??-<slug>/
   - 讲解：矩阵/卷积类的分片冲突判定（非收缩维冲突、收缩维与复制轴互换）；插入位置选择
   - 验收：能解释文档中 `lhs {"x"}, rhs {"y"}` 例为何要在 rhs 前插 reshard
 
-- [ ] **L4-05 `reshard-reduction`** — P1
+- [x] **L4-05 `reshard-reduction`** — P1
   - 覆盖（4）：`insert_explicit_reshards/reduce` `reduce_window_select_and_scatter` `sort` `rng_bit_generator`
   - 讲解：归约类的 replica 组语义；sort 的被排序维必须全复制；RNG 的特殊约束
   - 验收：能说出 sort 为什么需要 need_replication 因子

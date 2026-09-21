@@ -25,7 +25,9 @@ BLOCK_RE = re.compile(r"```(?:mlir|MLIR)\s*\n(.*?)```", re.S)
 ELIDE = "..."
 
 # 行首的 FileCheck 指令前缀，比对时剥掉（源文件里 CHECK 行承载的是期望输出）
-CHECK_PREFIX = re.compile(r"^\s*//\s*(CHECK[A-Z-]*|RUN)\s*:?\s?")
+# CHECK / CHECK-NEXT / RUN 等标准前缀；以及 FileCheck 的【自定义前缀】
+# （如 --check-prefixes=CHECK,UNREDUCED 时的 UNREDUCED: / NOUNREDUCED:）
+CHECK_PREFIX = re.compile(r"^\s*//\s*(CHECK[A-Z-]*|RUN|[A-Z][A-Z0-9_-]*)\s*:\s?")
 # 行尾内联的诊断指令（// expected-error ... / expected-note ...），不是 IR，比对时剥掉
 EXPECTED_SUFFIX = re.compile(r"\s*//\s*expected-(?:error|note|remark|warning)\b.*$")
 
