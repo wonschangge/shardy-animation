@@ -463,7 +463,7 @@ L?-??-<slug>/
   - 讲解：访存类算子的分片降级（与 L3-11、L6-05 呼应）
   - 验收：能说明 gather 的分片为何最难处理
 
-- [ ] **L5-09 `pad-for-divisibility`** — P0
+- [x] **L5-09 `pad-for-divisibility`** — P0
   - 覆盖（12）：`pad_for_divisibility/all_to_all` `dot_general` `func_ops` `generic_ops` `reduce_scatter`
     `sdy_all_slice_all_gather` `stablehlo_convolution` `stablehlo_gather` `stablehlo_pad`
     `stablehlo_reshape` `stablehlo_slice` `stablehlo_while`
