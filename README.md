@@ -204,6 +204,7 @@ animation/
 | — | **L4 层完成**：17 课 | 55 | ✅ |
 | [`L5-01`](L5-lowering/L5-01-global-to-local-overview/) | 全局转局部总览（6 幕） | 2 | ✅ |
 | [`L5-02`](L5-lowering/L5-02-lowering-sdy-collectives/) | 集合通信降级（P0，6 幕） | 6 | ✅ |
+| [`L5-03`](L5-lowering/L5-03-lowering-sdy-structural/) | 结构算子降级（5 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

@@ -433,7 +433,7 @@ L?-??-<slug>/
   - 讲解：SDY 集合通信 → StableHLO 集合通信的映射；replica group 的构造
   - 验收：能写出某个 sdy.all_gather 对应的 stablehlo.all_gather 关键属性
 
-- [ ] **L5-03 `lowering-sdy-structural`** — P1
+- [x] **L5-03 `lowering-sdy-structural`** — P1
   - 覆盖（3）：`convert_global_to_local/sdy_constant` `sdy_named_computation` `sdy_manual_computation`
   - 讲解：SDY 结构算子如何就地降级（常量按分片裁剪、named 内联、manual 直接展开为局部代码）
   - 验收：能预测 manual_computation 展开后的形状
