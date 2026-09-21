@@ -490,7 +490,7 @@ L?-??-<slug>/
   - 讲解：`split-file` / 流水线参数 / `--interpret` 全过程动画；如何自己写一个可执行测试
   - 验收：能独立写出一个最小可执行测试并通过
 
-- [ ] **L6-01 `exec-sdy-collectives`** — P0
+- [x] **L6-01 `exec-sdy-collectives`** — P0
   - 覆盖（10）：`executable_convert_global_to_local/sdy_all_gather` `sdy_all_reduce` `sdy_all_slice`
     `sdy_all_to_all` `sdy_all_to_all_cross_replica` `sdy_collective_permute_cross_replica`
     `sdy_collective_permute_without_self_loops` `sdy_collective_permute_with_self_loops`
