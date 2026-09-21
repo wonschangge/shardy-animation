@@ -335,7 +335,7 @@ L?-??-<slug>/
   - 讲解：逐元素与形状变换算子的 reshard 规则；为什么 reshape 常需 reshard
   - 验收：给定算子两端不同分片，判断是否需要插 reshard
 
-- [ ] **L4-04 `reshard-matmul-conv`** — P0
+- [x] **L4-04 `reshard-matmul-conv`** — P0
   - 覆盖（4）：`insert_explicit_reshards/dot_dot_general` `convolution` `fft` `cholesky_triangular_solve`
   - 讲解：矩阵/卷积类的分片冲突判定（非收缩维冲突、收缩维与复制轴互换）；插入位置选择
   - 验收：能解释文档中 `lhs {"x"}, rhs {"y"}` 例为何要在 rhs 前插 reshard

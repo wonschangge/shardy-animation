@@ -31,10 +31,18 @@ BLOCK = re.compile(r"```mlir\n(.*?)```", re.S)
 def split_block(m):
     """签名（以 '{' 结尾，可能跨多行）与之后的函数体拆成两块。"""
     lines = m.group(1).rstrip("\n").split("\n")
-    if not lines or not lines[0].lstrip().startswith("func.func"):
+    if not lines:
+        return m.group(0), False
+    # 允许块以注释 / CHECK 行开头：找到第一条 func.func 所在位置
+    start = 0
+    while start < len(lines) and not lines[start].lstrip().startswith("func.func"):
+        if lines[start].strip() and not lines[start].lstrip().startswith("//"):
+            return m.group(0), False   # 首个非注释行不是 func.func -> 不处理
+        start += 1
+    if start >= len(lines):
         return m.group(0), False
     # 找到签名结束行（以 '{' 结尾）
-    i = 0
+    i = start
     while i < len(lines) and not lines[i].rstrip().endswith("{"):
         i += 1
     if i >= len(lines) - 1:          # 没有函数体，无需拆分
