@@ -216,7 +216,7 @@ L?-??-<slug>/
   - 讲解：数据流边传播（视作恒等规则）；token 类型的特殊处理
   - 验收：能画出 while 每条数据流边并预测传播结果
 
-- [ ] **L2-09 `manual-computation-propagation`** — P1
+- [x] **L2-09 `manual-computation-propagation`** — P1
   - 覆盖（1）：`basic_propagation_manual_computation`
   - 讲解：传播如何**穿过** manual_computation 在自由轴上继续工作；manual 轴为何被冻结
   - 验收：给定含 manual_computation 的 IR，指出哪些轴会被继续分片
