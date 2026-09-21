@@ -32,14 +32,20 @@ def norm_line(s):
     return s.rstrip()
 
 
+def normalize(raw):
+    """统一归一化：剥掉 CHECK/RUN 前缀、去首尾空白。
+    源文件与引用块必须走同一套，否则引用 CHECK 行会被误判。"""
+    line = CHECK_PREFIX.sub("", raw) if CHECK_PREFIX.match(raw) else raw
+    return norm_line(line).strip()
+
+
 def source_lines(path):
     """源文件 -> 归一化行列表（剥掉 CHECK/RUN 前缀，保留原顺序）。"""
     if not os.path.exists(path):
         return None
     out = []
     for raw in open(path, encoding="utf-8", errors="replace").read().splitlines():
-        line = CHECK_PREFIX.sub("", raw) if CHECK_PREFIX.match(raw) else raw
-        s = norm_line(line).strip()
+        s = normalize(raw)
         if s:
             out.append(s)
     return out
@@ -116,7 +122,7 @@ def main():
                         segs.append(cur)
                     cur = []
                 else:
-                    s = norm_line(line).strip()
+                    s = normalize(line)
                     if s:
                         cur.append(s)
             if cur:
