@@ -75,6 +75,10 @@ def main():
         for d in declared:
             if d in universe:
                 covered.add(d)
+            elif os.path.isfile(os.path.join(a.upstream, d)):
+                # 真实存在但不是 .mlir（如 run_sdy_interpreter_test.sh）：
+                # 计入"被引用"但不计入 241 的覆盖率。
+                pass
             else:
                 phantom.append((rel, d))
 
