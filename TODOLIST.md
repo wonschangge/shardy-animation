@@ -201,7 +201,7 @@ L?-??-<slug>/
   - 讲解：算子按类型分批；方向选择规则 `BOTH > BACKWARD == FORWARD > NONE`；为何逐元素优先于 dot
   - 验收：能预测某算子在某一轮的传播方向
 
-- [ ] **L2-06 `user-priority-propagation`** — P0
+- [x] **L2-06 `user-priority-propagation`** — P0
   - 覆盖（1）：`user_priority_propagation`
   - 讲解：`p0/p1/p2` 分轮传播；低优先级开维不被高优先级覆盖；与 `intro` 第 10 幕呼应但深入到 IR 层
   - 验收：给定带 p0/p1/p2 标注的 IR，能画出每轮结束时的分片状态
