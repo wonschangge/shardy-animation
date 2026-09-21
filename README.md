@@ -149,7 +149,7 @@ animation/
 | [`intro/`](intro/) | 预备篇：分片表示 / 传播 / 集合通信 / SPMD / MPMD 概览（20 幕） | — | ✅ |
 | [`L1-01`](L1-ir/L1-01-mesh-and-devices/) | 逻辑网格 `sdy.mesh` 与设备编号（7 幕） | 2 | ✅ |
 | [`L1-02`](L1-ir/L1-02-tensor-sharding-syntax/) | 张量分片属性语法 `#sdy.sharding`（10 幕） | 2 | ✅ |
-| L1-03 | `tensor-sharding-verification` 分片校验不变量 | 1 | ⬜ |
+| [`L1-03`](L1-ir/L1-03-tensor-sharding-verification/) | 分片校验不变量（33 类错误 / 9 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
