@@ -246,7 +246,7 @@ L?-??-<slug>/
 **覆盖**：`transforms/import/test/`(18) + `transforms/import/test/executable_explicit_gather_scatter_batching/`(5) — 23 文件 / 6,712 行
 **前置**：L1、L2-01
 
-- [ ] **L3-01 `import-pipeline-overview`** — P0
+- [x] **L3-01 `import-pipeline-overview`** — P0
   - 覆盖（1）：`import_pipeline`
   - 讲解：导入流水线完整 pass 顺序与每步目的；总览动画
   - 验收：能背出导入流水线的阶段划分

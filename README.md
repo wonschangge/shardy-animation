@@ -171,7 +171,8 @@ animation/
 | [`L2-11`](L2-propagation/L2-11-propagation-pipeline/) | 传播完整流水线（6 幕） | 1 | ✅ |
 | [`L2-12`](L2-propagation/L2-12-propagation-debugging/) | 传播调试（6 幕，可点击追溯） | 2 | ✅ |
 | — | **L2 层完成**：12 课 / 18 文件 | 18 | ✅ |
-| L3-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：导入流水线 | | ⬜ |
+| [`L3-01`](L3-import/L3-01-import-pipeline-overview/) | 导入流水线总览（6 幕） | 1 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 
