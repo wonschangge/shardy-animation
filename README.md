@@ -220,6 +220,7 @@ animation/
 | [`L6-05`](L6-execution/L6-05-exec-gather/) | gather 的执行（P0 ★，6 幕） | 6 | ✅ |
 | [`L6-06`](L6-execution/L6-06-exec-pad/) | pad 的执行（P0 ★，6 幕） | 19 | ✅ |
 | [`L6-07`](L6-execution/L6-07-exec-reshape/) | reshape 的执行（P0，5 幕） | 7 | ✅ |
+| [`L6-08`](L6-execution/L6-08-exec-reverse-slice/) | reverse/slice 的执行（5 幕） | 9 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

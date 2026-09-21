@@ -551,7 +551,7 @@ L?-??-<slug>/
   - 讲解：reshape 的轴拆分（与 `intro` 第 9 幕子轴概念直接对应，这里看真实降级结果）
   - 验收：能给 1D→2D reshape 选出正确的子轴拆分方案
 
-- [ ] **L6-08 `exec-reverse-slice`** — P1
+- [x] **L6-08 `exec-reverse-slice`** — P1
   - 覆盖（9）：`executable_partitioner_pipeline/stablehlo_reverse_multi_dim_divisible`
     `stablehlo_reverse_single_dim_indivisible` `stablehlo_slice_comm_free` `stablehlo_slice_indivisible`
     `stablehlo_slice_replicated` `stablehlo_slice_replicated_mesh_2` `stablehlo_slice_strided`
