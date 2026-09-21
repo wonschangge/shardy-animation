@@ -223,7 +223,8 @@ animation/
 | [`L6-08`](L6-execution/L6-08-exec-reverse-slice/) | reverse/slice 的执行（5 幕） | 9 | ✅ |
 | [`L6-09`](L6-execution/L6-09-exec-scatter-and-misc/) | scatter 与杂项（5 幕） | 7 | ✅ |
 | — | **L6 层完成**：10 课 | 74 | ✅ |
-| L7-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：综合实战 | | ⬜ |
+| [`L7-01`](L7-practice/L7-01-end-to-end-walkthrough/) | 端到端走查（P0，5 幕） | 4 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 

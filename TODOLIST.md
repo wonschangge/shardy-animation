@@ -580,7 +580,10 @@ L?-??-<slug>/
 **层目标**：把前六层串起来，面对真实模型能独立分析。
 **覆盖**：不新增测试文件，**复用**前述各课 IR 做综合。
 
-- [ ] **L7-01 `end-to-end-walkthrough`** — P0
+- [x] **L7-01 `end-to-end-walkthrough`** — P0
+  - 覆盖（4）：`executable_partitioner_pipeline/single_device_add` `single_device_switch`
+    `sdy_all_to_all_fully_scattered` `sdy_all_to_all_partially_scattered`
+    （L2 层课↔文件分配漂移导致这 4 个文件漏覆盖，L7-01 补齐）
   - 讲解：一个完整 StableHLO 程序，从导入到设备代码，**一条时间轴走完所有 pass**，每步可暂停看 IR
   - 验收：能对着动画复述完整流程
 
