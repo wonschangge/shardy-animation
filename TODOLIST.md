@@ -287,7 +287,7 @@ L?-??-<slug>/
   - 讲解：补齐 in/out sharding 中缺失的 manual 轴到 replicated；按网格序排序；空 region 报错
   - 验收：能指出哪条 IR 会触发报错以及为什么
 
-- [ ] **L3-09 `sharding-group-import`** — P1
+- [x] **L3-09 `sharding-group-import`** — P1
   - 覆盖（2）：`sharding_group_import` `sharding_group_constraints`
   - 讲解：组传递闭包合并（一个张量同属 G1、G2 ⇒ 合并）；组 id 规范化为 0..N-1；嵌套块约束
   - 验收：给定多个重叠分组，算出合并后的分组
