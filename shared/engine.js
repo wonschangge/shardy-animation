@@ -1,10 +1,12 @@
 /* ==========================================================================
-   Shardy 入门动画 — 引擎 + 通用可视元件
+   Shardy 课件 — 共享动画引擎
    --------------------------------------------------------------------------
+   由 intro/app.js 提炼而来，供全部课件复用（单一来源）。
    设计要点：
    - 舞台固定 1280x720，按窗口等比缩放，保证任何屏幕上排版一致。
-   - 每一"幕"(scene) 由 scenes.js 声明，本文件负责挂载、时间轴、自动播放。
+   - 每一"幕"(scene) 由各课 lesson.js 声明，本文件负责挂载、时间轴、自动播放。
    - 时间轴只有在"播放中"才前进，因此暂停是真正的时间冻结（含幕内分步动画）。
+   - 经典脚本（非 ES module）：保证 file:// 双击直接打开也能工作。
    ========================================================================== */
 'use strict';
 
@@ -26,7 +28,7 @@ const U = {
     return e;
   },
 
-  /* 轴颜色：索引 -> CSS 变量名（axc0..axc5 循环） */
+  /* 轴颜色：索引 -> CSS class（c0..c5 循环） */
   axc: i => 'axc' + (i % 6),
   axcN: i => 'c' + (i % 6),
 
@@ -50,11 +52,11 @@ const U = {
     const g = U.el('div', { class: 'mesh' });
     g.style.gridTemplateColumns = `repeat(${a1[1]}, ${cs}px)`;
     g.style.gridTemplateRows = `repeat(${a0[1]}, ${cs}px)`;
-    // 行 = 第 0 轴（默认行优先），与 sdy 的 iota 设备编号一致
+    // 行 = 第 0 轴（行优先），与 sdy 的 iota 设备编号一致
     for (let i = 0; i < a0[1]; i++) {
       for (let j = 0; j < a1[1]; j++) {
         const id = i * a1[1] + j;
-        const d = U.el('div', { class: `dev ${U.axc(i)}`, 'data-dev': a0[0] + i + a1[0] + j });
+        const d = U.el('div', { class: `dev ${U.axc(i)}`, 'data-dev': id });
         d.style.setProperty('--c', `var(--ax${i % 6})`);
         d.innerHTML = `<span class="dev-id">${id}</span>`;
         const inner = cell(id, i, j);
@@ -99,25 +101,29 @@ const U = {
     return container.querySelectorAll('.cut');
   },
 
+  /* 转义 HTML */
+  esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); },
+
   /* 简易 MLIR 高亮：单遍分词，避免二次替换破坏已插入的 HTML 标签 */
   hl(src) {
-    const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const esc = U.esc;
     const RE = new RegExp([
-      '(\\/\\/[^\\n]*)',                                     // 1 注释
-      '(#[A-Za-z_][A-Za-z0-9_.]*)',                          // 2 #sdy.xxx / #mpmd.xxx 属性
-      '(@[A-Za-z_][A-Za-z0-9_]*)',                           // 3 @mesh 符号引用
-      '("[^"\\n]*")',                                        // 4 轴名等字符串
-      '\\b((?:sdy|stablehlo|mpmd|func)\\.[a-z_][a-z0-9_]*)', // 5 带命名空间的算子
-      '\\b(mesh_tensor|func\\.func|module|return|tensor)\\b' // 6 关键字
+      '(\\/\\/[^\\n]*)',                                      // 1 注释
+      '(#[A-Za-z_][A-Za-z0-9_.]*)',                           // 2 #sdy.xxx / #mpmd.xxx 属性
+      '(-(?:sdy|mpmd)-[a-z0-9-]+)',                           // 3 命令行 flag
+      '(@[A-Za-z_][A-Za-z0-9_]*)',                            // 4 @mesh 符号引用
+      '("[^"\\n]*")',                                          // 5 轴名等字符串
+      '\\b((?:sdy|stablehlo|mpmd|func)\\.[a-z_][a-z0-9_]*)',  // 6 带命名空间的算子
+      '\\b(mesh_tensor|func\\.func|module|return|tensor)\\b'  // 7 关键字
     ].join('|'), 'g');
-    const CLS = ['', 'com', 'at', 'nm', 'st', 'kw', 'kw'];
+    const CLS = ['', 'com', 'at', 'flag', 'nm', 'st', 'kw', 'kw'];
     return src.split('\n').map(line => {
       let out = '', last = 0, m;
       RE.lastIndex = 0;
       while ((m = RE.exec(line)) !== null) {
         if (m.index > last) out += esc(line.slice(last, m.index));
         let cls = 'kw';
-        for (let k = 1; k <= 6; k++) if (m[k] !== undefined) { cls = CLS[k]; break; }
+        for (let k = 1; k <= 7; k++) if (m[k] !== undefined) { cls = CLS[k]; break; }
         out += '<span class="' + cls + '">' + esc(m[0]) + '</span>';
         last = m.index + m[0].length;
       }
@@ -150,9 +156,13 @@ class Timeline {
 /* ------------------------------------------------------------------- 引擎 */
 const App = {
   idx: 0, playing: true, elapsed: 0, last: 0, tl: null,
+  scenes: [], opts: {},
   $: id => document.getElementById(id),
 
-  init() {
+  /* scenes: SCENES 数组；opts: {kicker, codeCap} */
+  init(scenes, opts = {}) {
+    this.scenes = scenes || [];
+    this.opts = opts || {};
     this.fit();
     window.addEventListener('resize', () => this.fit());
     this.$('btn-next').onclick = () => { this.go(this.idx + 1); };
@@ -178,8 +188,8 @@ const App = {
 
   buildDots() {
     const d = this.$('dots'); d.innerHTML = '';
-    SCENES.forEach((s, i) => {
-      const dot = U.el('div', { class: 'dot', title: (i + 1) + '. ' + s.title });
+    this.scenes.forEach((s, i) => {
+      const dot = U.el('div', { class: 'dot', title: (i + 1) + '. ' + String(s.title).replace(/<[^>]+>/g, '') });
       dot.onclick = () => this.go(i);
       d.appendChild(dot);
     });
@@ -189,15 +199,16 @@ const App = {
   syncPlay() { this.$('btn-play').textContent = this.playing ? '⏸' : '▶'; },
 
   go(i) {
-    const n = SCENES.length;
+    const n = this.scenes.length;
+    if (!n) return;
     this.idx = ((i % n) + n) % n;
-    const sc = SCENES[this.idx];
+    const sc = this.scenes[this.idx];
     this.elapsed = 0;
     this.tl = new Timeline();
-    this.$('scene-kicker').textContent = sc.kicker || 'Shardy 入门';
+    this.$('scene-kicker').innerHTML = sc.kicker || this.opts.kicker || 'Shardy 课件';
     this.$('scene-title').innerHTML = sc.title;
     this.$('scene-sub').innerHTML = sc.sub || '';
-    this.$('side-cap').textContent = sc.codeCap || '对应 IR';
+    this.$('side-cap').textContent = sc.codeCap || this.opts.codeCap || '对应 IR';
     this.$('code').innerHTML = sc.code ? U.hl(sc.code) : '<span class="com">（本幕无 IR）</span>';
     this.$('caption').innerHTML = sc.caption || '';
     const v = this.$('visual'); v.innerHTML = '';
@@ -205,15 +216,15 @@ const App = {
     v.appendChild(holder);
     try { sc.build(holder, this.tl); } catch (e) { console.error('scene build failed', e); holder.textContent = '场景渲染出错: ' + e.message; }
     document.querySelectorAll('.dot').forEach((d, k) => d.classList.toggle('on', k === this.idx));
-    this.$('counter').textContent = (this.idx + 1) + ' / ' + SCENES.length;
+    this.$('counter').textContent = (this.idx + 1) + ' / ' + n;
   },
 
   loop(t) {
     const dt = Math.min(t - this.last, 100); this.last = t;
-    if (this.playing) {
+    if (this.playing && this.scenes.length) {
       this.elapsed += dt;
       this.tl.tick(dt);
-      const dur = SCENES[this.idx].duration || 11000;
+      const dur = this.scenes[this.idx].duration || 11000;
       const p = Math.min(this.elapsed / dur, 1);
       this.$('progress-fill').style.width = (p * 100) + '%';
       if (p >= 1) this.go(this.idx + 1);
@@ -221,5 +232,3 @@ const App = {
     requestAnimationFrame(tt => this.loop(tt));
   }
 };
-
-window.addEventListener('DOMContentLoaded', () => App.init());
