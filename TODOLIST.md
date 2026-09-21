@@ -370,7 +370,7 @@ L?-??-<slug>/
   - 讲解：permutation 因子（pad / reverse / 窗口类）的分片如何解析；halo exchange 开关差异；replica_id 场景
   - 验收：能说出开关 halo exchange 时 IR 的差别
 
-- [ ] **L4-10 `optimize-collectives`** — P2
+- [x] **L4-10 `optimize-collectives`** — P2
   - 覆盖（2）：`optimize_collectives/all_to_all_fully_scattered` `optimize_collectives/all_to_all_partially_scattered`
   - 讲解：消除 all-to-all 链前的冗余 collective-permute；全散开 vs 部分散开
   - 验收：能指出哪条 permute 被消除以及为什么安全
