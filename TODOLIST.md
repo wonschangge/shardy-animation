@@ -297,7 +297,7 @@ L?-??-<slug>/
   - 讲解：去掉 size=1 轴以免冲突；函数按调用图前序重排（模拟自顶向下传播）；函数结果分片回填到调用点
   - 验收：能说明为什么 size=1 的轴会造成传播冲突
 
-- [ ] **L3-11 `gather-scatter-batching`** — P1
+- [x] **L3-11 `gather-scatter-batching`** — P1
   - 覆盖（6）：`explicit_gather_scatter_batching`
     + `executable_explicit_gather_scatter_batching/gather_iota_at_end_of_concat`
     + `executable_explicit_gather_scatter_batching/gather_iota_broadcast_concat`
