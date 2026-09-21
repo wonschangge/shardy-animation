@@ -498,7 +498,7 @@ L?-??-<slug>/
   - 讲解：每段 IR 的 part1/part2 对照 + 逐设备数值动画（哪台设备算出什么）
   - 验收：能手工演算某个 4 设备 all-to-all 的数值结果
 
-- [ ] **L6-02 `exec-stablehlo-collectives`** — P1
+- [x] **L6-02 `exec-stablehlo-collectives`** — P1
   - 覆盖（5）：`executable_convert_global_to_local/stablehlo_all_gather` `stablehlo_all_reduce`
     `stablehlo_all_to_all` `stablehlo_collective_permute` `stablehlo_reduce_scatter`
   - 讲解：直接写 stablehlo 集合通信时的等价性与差异
