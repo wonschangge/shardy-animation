@@ -211,7 +211,7 @@ L?-??-<slug>/
   - 讲解：组内"一荣俱荣"；无数据依赖时靠组把分片传过去
   - 验收：能解释没有 sharding_group 时该张量为何退化为全复制
 
-- [ ] **L2-08 `data-flow-edges`** — P1
+- [x] **L2-08 `data-flow-edges`** — P1
   - 覆盖（2）：`basic_propagation_data_flow_edges` `basic_propagation_token`
   - 讲解：数据流边传播（视作恒等规则）；token 类型的特殊处理
   - 验收：能画出 while 每条数据流边并预测传播结果
