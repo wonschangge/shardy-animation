@@ -159,6 +159,8 @@ animation/
 | [`L1-10`](L1-ir/L1-10-reshard-and-constant/) | 重分片与常量 `reshard`/`constant`（8 幕） | 4 | ✅ |
 | — | **L1 层完成**：10 课 / 28 文件 | 28 | ✅ |
 | [`L2-01`](L2-propagation/L2-01-basic-propagation/) | 基础传播 `basic-propagation`（10 幕） | 1 | ✅ |
+| [`L2-02`](L2-propagation/L2-02-conservative-mode/) | 保守传播模式（6 幕） | 1 | ✅ |
+| [`L2-03`](L2-propagation/L2-03-keep-sharding-rules/) | 保留分片规则（4 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

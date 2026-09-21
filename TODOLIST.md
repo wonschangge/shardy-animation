@@ -181,12 +181,12 @@ L?-??-<slug>/
     每条给 before→after。重点：**开放维度的轴如何向后传播**、factor 空间的收集与扩展
   - 验收：随机抽 3 个用例，手工推出 pass 输出分片
 
-- [ ] **L2-02 `conservative-mode`** — P1
+- [x] **L2-02 `conservative-mode`** — P1
   - 覆盖（1）：`basic_propagation_conservative`
   - 讲解：`conservative-propagation` 禁止分裂轴与不可整除轴；同一 IR 开关对比动画
   - 验收：能说出保守模式在什么场景下是必须的
 
-- [ ] **L2-03 `keep-sharding-rules`** — P2
+- [x] **L2-03 `keep-sharding-rules`** — P2
   - 覆盖（1）：`basic_propagation_keep_sharding_rules`
   - 讲解：`keep-sharding-rules` 保留推导出的 rule 用于调试
   - 验收：能读懂保留后的 IR 中的 rule 属性
