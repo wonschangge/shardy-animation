@@ -26,6 +26,8 @@ ELIDE = "..."
 
 # 行首的 FileCheck 指令前缀，比对时剥掉（源文件里 CHECK 行承载的是期望输出）
 CHECK_PREFIX = re.compile(r"^\s*//\s*(CHECK[A-Z-]*|RUN)\s*:?\s?")
+# 行尾内联的诊断指令（// expected-error ... / expected-note ...），不是 IR，比对时剥掉
+EXPECTED_SUFFIX = re.compile(r"\s*//\s*expected-(?:error|note|remark|warning)\b.*$")
 
 
 def norm_line(s):
@@ -33,9 +35,10 @@ def norm_line(s):
 
 
 def normalize(raw):
-    """统一归一化：剥掉 CHECK/RUN 前缀、去首尾空白。
-    源文件与引用块必须走同一套，否则引用 CHECK 行会被误判。"""
+    """统一归一化：剥掉 CHECK/RUN 前缀、行尾 expected-* 诊断指令、首尾空白。
+    源文件与引用块必须走同一套，否则引用带诊断注释的 IR 行会被误判。"""
     line = CHECK_PREFIX.sub("", raw) if CHECK_PREFIX.match(raw) else raw
+    line = EXPECTED_SUFFIX.sub("", line)
     return norm_line(line).strip()
 
 
