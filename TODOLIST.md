@@ -396,7 +396,7 @@ L?-??-<slug>/
   - 讲解：单设备分片降级为 `stablehlo.if` 按设备号守卫；未归约轴一致性校验；CMV1 兼容性移除
   - 验收：能说出 unreduced 轴从哪来、必须在哪被消除
 
-- [ ] **L4-15 `export-finalize`** — P0
+- [x] **L4-15 `export-finalize`** — P0
   - 覆盖（7）：`close_shardings` `drop_sharding_rules` `drop_sharding_and_mesh` `inline_meshes`
     `remove_sharding_groups` `remove_sub_axes_in_input_output_shardings`
     `update_non_divisible_input_output_shardings`
