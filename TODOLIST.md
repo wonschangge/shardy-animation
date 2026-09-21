@@ -448,7 +448,7 @@ L?-??-<slug>/
   - 讲解：matmul 在各种分片组合下的局部化 + 通信（经典并行策略的 IR 体现）
   - 验收：能说出"切 M / 切 N / 切 K"三种并行下各自的通信
 
-- [ ] **L5-06 `lowering-convolution`** — P1
+- [x] **L5-06 `lowering-convolution`** — P1
   - 覆盖（1）：`convert_global_to_local/stablehlo_convolution`
   - 讲解：卷积分片降级与 halo 处理
   - 验收：能指出卷积分片何时需要通信
