@@ -363,3 +363,9 @@ table.rtable tr.hot td { background: rgba(94,234,212,.13); }
 .exercise .exq { font-size: 13.5px; line-height: 1.6; }
 .exercise .exa { margin-top: 7px; padding-top: 7px; font-size: 13px; line-height: 1.6; }
 .exercise .exbtn { margin-top: 7px; padding: 4px 12px; }
+
+/* 练习区紧凑修饰类：三个练习块 + 长答案时的可选方案（L3-11 实测需要） */
+.compact-ex .exercise { padding: 6px 11px; }
+.compact-ex .exercise .exq { font-size: 12.5px; line-height: 1.5; }
+.compact-ex .exercise .exa { margin-top: 5px; padding-top: 5px; font-size: 12px; line-height: 1.5; }
+.compact-ex .exercise .exbtn { margin-top: 5px; padding: 3px 10px; }
