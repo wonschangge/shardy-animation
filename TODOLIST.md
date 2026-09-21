@@ -602,7 +602,8 @@ L?-??-<slug>/
     `debug-sharding-origins` 用法 / `module-dump-directory` 用法
   - 验收：给定一个"坏"IR 能定位原因
 
-- [ ] **L7-04 `dialect-agnostic-integration`** — P1
+- [x] **L7-04 `dialect-agnostic-integration`** — P1
+  - 引用（2，不新增覆盖）：`ir/op_interface.td`（三个接口）`ir/constants.h`（常量拆分）
   - 讲解：为自己的方言接入 Shardy：实现 `ShardingRuleOpInterface` / `ShardableDataFlowOpInterface`、
     常量拆分与 Elementwise trait
   - 验收：能写出一条自定义算子的 sharding rule 并被传播正确使用
