@@ -381,7 +381,7 @@ L?-??-<slug>/
     `filter` 语法（算子名子串 / `selectLow`/`selectHigh`/`func`）
   - 验收：能写出只分区 dot 与 pad 的 filter 串
 
-- [ ] **L4-12 `export-named-computations`** — P2
+- [x] **L4-12 `export-named-computations`** — P2
   - 覆盖（1）：`export_named_computations`
   - 讲解：`named_computation` 反向 outline 成函数 + call，并保留分片
   - 验收：能预测 outline 后的函数签名

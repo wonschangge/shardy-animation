@@ -195,6 +195,7 @@ animation/
 | [`L4-09`](L4-export/L4-09-resolve-permutation-factors/) | 置换因子消解（6 幕） | 2 | ✅ |
 | [`L4-10`](L4-export/L4-10-optimize-collectives/) | 通信优化（6 幕） | 2 | ✅ |
 | [`L4-11`](L4-export/L4-11-per-instruction-partitioning/) | 逐指令分区（6 幕） | 3 | ✅ |
+| [`L4-12`](L4-export/L4-12-export-named-computations/) | 导出命名计算（6 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
