@@ -22,12 +22,24 @@ CHROME = "/usr/bin/google-chrome"
 
 OVERFLOW_JS = """(()=>{
   const v = document.getElementById('visual').getBoundingClientRect();
+  // 若元素被某个"会裁剪"的祖先包住（overflow != visible），它不可能真正溢出页面，
+  // 只是长行内容超出了滚动容器 —— 这类不算布局溢出。
+  const clipped = (el) => {
+    let p = el.parentElement;
+    while (p && p !== document.getElementById('visual')) {
+      const cs = getComputedStyle(p);
+      if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') return true;
+      p = p.parentElement;
+    }
+    return false;
+  };
   const bad = [];
   document.querySelectorAll('#visual *').forEach(el=>{
     const b = el.getBoundingClientRect();
     if (b.width === 0 && b.height === 0) return;
     const over = Math.round(Math.max(v.top-b.top, b.bottom-v.bottom, v.left-b.left, b.right-v.right));
-    if (over > 3) bad.push((el.className.toString().slice(0,30) || el.tagName) + ':' + over);
+    if (over > 3 && !clipped(el))
+      bad.push((el.className.toString().slice(0,30) || el.tagName) + ':' + over);
   });
   return {n: bad.length, sample: bad.slice(0,3)};
 })()"""
