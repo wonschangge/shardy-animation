@@ -191,7 +191,7 @@ L?-??-<slug>/
   - 讲解：`keep-sharding-rules` 保留推导出的 rule 用于调试
   - 验收：能读懂保留后的 IR 中的 rule 属性
 
-- [ ] **L2-04 `aggressive-propagation`** — P0
+- [x] **L2-04 `aggressive-propagation`** — P0
   - 覆盖（1）：`aggressive_propagation`
   - 讲解：与 basic 的差异 —— 冲突如何被"强行"消解、何时引入额外通信、`propagation-strategy` 选项
   - 验收：同一输入分别用 basic/aggressive 跑，说出每处差异的原因

@@ -161,6 +161,7 @@ animation/
 | [`L2-01`](L2-propagation/L2-01-basic-propagation/) | 基础传播 `basic-propagation`（10 幕） | 1 | ✅ |
 | [`L2-02`](L2-propagation/L2-02-conservative-mode/) | 保守传播模式（6 幕） | 1 | ✅ |
 | [`L2-03`](L2-propagation/L2-03-keep-sharding-rules/) | 保留分片规则（4 幕） | 1 | ✅ |
+| [`L2-04`](L2-propagation/L2-04-aggressive-propagation/) | 激进传播 `aggressive-propagation`（8 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
