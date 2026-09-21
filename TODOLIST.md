@@ -458,7 +458,7 @@ L?-??-<slug>/
   - 讲解：归约维分片时的局部归约 + all-reduce
   - 验收：能判断某个 reduce 是否需要通信
 
-- [ ] **L5-08 `lowering-gather-scatter`** — P1
+- [x] **L5-08 `lowering-gather-scatter`** — P1
   - 覆盖（3）：`convert_global_to_local/stablehlo_gather` `stablehlo_scatter` `stablehlo_select_and_scatter`
   - 讲解：访存类算子的分片降级（与 L3-11、L6-05 呼应）
   - 验收：能说明 gather 的分片为何最难处理
