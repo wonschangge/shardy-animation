@@ -150,6 +150,7 @@ animation/
 | [`L1-01`](L1-ir/L1-01-mesh-and-devices/) | 逻辑网格 `sdy.mesh` 与设备编号（7 幕） | 2 | ✅ |
 | [`L1-02`](L1-ir/L1-02-tensor-sharding-syntax/) | 张量分片属性语法 `#sdy.sharding`（10 幕） | 2 | ✅ |
 | [`L1-03`](L1-ir/L1-03-tensor-sharding-verification/) | 分片校验不变量（33 类错误 / 9 幕） | 1 | ✅ |
+| [`L1-04`](L1-ir/L1-04-edge-sharding/) | 边分片与传播调试信息 `propagation_edges`（7 幕） | 2 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
