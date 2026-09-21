@@ -504,7 +504,7 @@ L?-??-<slug>/
   - 讲解：直接写 stablehlo 集合通信时的等价性与差异
   - 验收：能说出与 L6-01 对应文件的异同
 
-- [ ] **L6-03 `exec-convolution`** — P1
+- [x] **L6-03 `exec-convolution`** — P1
   - 覆盖（5）：`executable_convert_global_to_local/stablehlo_convolution_shard_batch`
     `stablehlo_convolution_shard_batch_group` `stablehlo_convolution_shard_contracting_dim`
     `stablehlo_convolution_shard_feature_group`

@@ -215,6 +215,7 @@ animation/
 | [`L6-00`](L6-execution/L6-00-executable-test-mechanism/) | 可执行测试机制（P0，6 幕） | 2(.sh) | ✅ |
 | [`L6-01`](L6-execution/L6-01-exec-sdy-collectives/) | sdy 集合通信的执行（P0，6 幕） | 10 | ✅ |
 | [`L6-02`](L6-execution/L6-02-exec-stablehlo-collectives/) | stablehlo 通信的执行（6 幕） | 5 | ✅ |
+| [`L6-03`](L6-execution/L6-03-exec-convolution/) | 卷积的执行（6 幕） | 5 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
