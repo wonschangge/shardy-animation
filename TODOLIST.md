@@ -528,7 +528,7 @@ L?-??-<slug>/
   - 讲解：gather 在归约维被折叠时的 4 种变体（含 i32/max/min 三种归约语义）；两个归约维
   - 验收：能区分 4 个变体差异并预测数值
 
-- [ ] **L6-06 `exec-pad`** — P0 ★ 本层最大族
+- [x] **L6-06 `exec-pad`** — P0 ★ 本层最大族
   - 覆盖（19）：`executable_convert_global_to_local/stablehlo_pad_non_sharded`
     `stablehlo_pad_sharded_non_uniform` `stablehlo_pad_sharded_uniform`
     + `executable_partitioner_pipeline/stablehlo_pad_indivisible` `stablehlo_pad_interior`
