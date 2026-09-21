@@ -102,6 +102,7 @@ http.proxy = http://127.0.0.1:7890
 
 ```sh
 cd animation
+python3 tools/lint_lessons.py          # 先跑：lesson.js 静态语法（秒级）
 python3 tools/check_coverage.py        # B 组：覆盖度
 python3 tools/check_ir_fidelity.py     # A1/A3：IR 保真 + 清单一致
 python3 tools/check_flags.py           # A2：flag 正确
@@ -109,6 +110,10 @@ python3 tools/check_render.py <课件路径>  # C 组：渲染质量
 ```
 
 **任一门禁失败即不得提交**，不得用"下次再修"绕过。
+
+> `lint_lessons.py` 是 2026-02 新增的**前置检查**：`style: 'gap':13px` 这类
+> 引号位置笔误会让课件白屏，渲染门禁虽能发现但要启动浏览器。lint 秒级返回，
+> 且对**全部**课件扫描（不只当前课）。
 
 ### 3.3 内容准确性红线
 
