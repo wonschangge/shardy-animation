@@ -158,7 +158,8 @@ animation/
 | [`L1-09`](L1-ir/L1-09-constraint-group-barrier/) | 约束类算子 constraint/group/barrier（7 幕） | 4 | ✅ |
 | [`L1-10`](L1-ir/L1-10-reshard-and-constant/) | 重分片与常量 `reshard`/`constant`（8 幕） | 4 | ✅ |
 | — | **L1 层完成**：10 课 / 28 文件 | 28 | ✅ |
-| L2-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：传播算法 | | ⬜ |
+| [`L2-01`](L2-propagation/L2-01-basic-propagation/) | 基础传播 `basic-propagation`（10 幕） | 1 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 

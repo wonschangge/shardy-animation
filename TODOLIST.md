@@ -175,7 +175,7 @@ L?-??-<slug>/
 **覆盖**：`transforms/propagation/test/`(16) + `transforms/propagation/debugging/test/`(2) — 18 文件 / 8,844 行
 **前置**：L1 全部
 
-- [ ] **L2-01 `basic-propagation`** — P0 ★ 最大单课
+- [x] **L2-01 `basic-propagation`** — P0 ★ 最大单课
   - 覆盖（1）：`basic_propagation`（1106 行）
   - 讲解：按算子族拆成多条动画线（逐元素 / dot / reduce / reshape / broadcast / slice / gather / while…），
     每条给 before→after。重点：**开放维度的轴如何向后传播**、factor 空间的收集与扩展
