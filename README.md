@@ -189,7 +189,9 @@ animation/
 | [`L4-04`](L4-export/L4-04-reshard-matmul-conv/) | 矩阵与卷积类的 reshard（6 幕） | 4 | ✅ |
 | [`L4-05`](L4-export/L4-05-reshard-reduction/) | 归约与排序类的 reshard（7 幕） | 4 | ✅ |
 | [`L4-06`](L4-export/L4-06-reshard-memory-ops/) | 访存与通信类的 reshard（6 幕） | 3 | ✅ |
-| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
+| [`L4-07`](L4-export/L4-07-reshard-structure/) | 结构性场景的 reshard（6 幕） | 9 | ✅ |
+| — | **L4 算子族展开完成**：7 课 / 472 用例 | 38 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一段：collective 专题 | | ⬜ |
 
 ---
 

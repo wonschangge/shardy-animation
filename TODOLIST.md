@@ -350,7 +350,7 @@ L?-??-<slug>/
   - 讲解：访存类与自定义调用；集合通信算子自身的 reshard 处理
   - 验收：能判断 custom_call 的分片传播边界
 
-- [ ] **L4-07 `reshard-structure`** — P1
+- [x] **L4-07 `reshard-structure`** — P1
   - 覆盖（9）：`insert_explicit_reshards/data_flow_ops` `manual_computation` `call_ops`
     `call_ops_enable_full_version_false` `func_inputs_outputs` `meshes`
     `single_device_sharding` `single_device_sharding_errors` `unreduced`
