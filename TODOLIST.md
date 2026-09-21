@@ -206,7 +206,7 @@ L?-??-<slug>/
   - 讲解：`p0/p1/p2` 分轮传播；低优先级开维不被高优先级覆盖；与 `intro` 第 10 幕呼应但深入到 IR 层
   - 验收：给定带 p0/p1/p2 标注的 IR，能画出每轮结束时的分片状态
 
-- [ ] **L2-07 `sharding-group-propagation`** — P1
+- [x] **L2-07 `sharding-group-propagation`** — P1
   - 覆盖（1）：`sharding_group_propagation`
   - 讲解：组内"一荣俱荣"；无数据依赖时靠组把分片传过去
   - 验收：能解释没有 sharding_group 时该张量为何退化为全复制

@@ -164,6 +164,7 @@ animation/
 | [`L2-04`](L2-propagation/L2-04-aggressive-propagation/) | 激进传播 `aggressive-propagation`（8 幕） | 1 | ✅ |
 | [`L2-05`](L2-propagation/L2-05-op-priority-propagation/) | 算子优先级传播（7 幕） | 1 | ✅ |
 | [`L2-06`](L2-propagation/L2-06-user-priority-propagation/) | 用户优先级传播（7 幕） | 1 | ✅ |
+| [`L2-07`](L2-propagation/L2-07-sharding-group-propagation/) | 分片组传播（6 幕） | 1 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
