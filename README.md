@@ -200,7 +200,9 @@ animation/
 | [`L4-14`](L4-export/L4-14-single-device-and-unreduced/) | 单设备与未归约（6 幕） | 3 | ✅ |
 | [`L4-15`](L4-export/L4-15-export-finalize/) | 导出收尾（P0，6 幕） | 7 | ✅ |
 | [`L4-16`](L4-export/L4-16-sink-and-convert/) | 边下沉与转换（6 幕） | 3 | ✅ |
-| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
+| [`L4-17`](L4-export/L4-17-merger-and-debug-cleanup/) | 合并与调试清理（6 幕） | 3 | ✅ |
+| — | **L4 层完成**：17 课 | 55 | ✅ |
+| L5-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：传播算法 | | ⬜ |
 
 ---
 

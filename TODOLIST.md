@@ -409,7 +409,7 @@ L?-??-<slug>/
   - 讲解：把边分片"下沉"到输入张量并删除边 op；constraint → reshard
   - 验收：能预测下沉后分片落在哪个值上
 
-- [ ] **L4-17 `merger-and-debug-cleanup`** — P2
+- [x] **L4-17 `merger-and-debug-cleanup`** — P2
   - 覆盖（3）：`constant_or_scalar_merger` `remove_propagation_debug_info` `propagate_to_func_results`
   - 讲解：把分片相同的常量重新合并（与 L3-02 对称）；擦除调试属性；func 结果分片回填
   - 验收：能说明 L3-02 与 L4-17 为何是一对逆操作
