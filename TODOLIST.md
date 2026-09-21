@@ -593,7 +593,11 @@ L?-??-<slug>/
   - 讲解：用同一份程序演示数据并行 / 张量并行 / 流水线并行 / ZeRO 的分片标注差异与通信代价对比
   - 验收：给定模型规模与设备数，能选合理策略并说明代价
 
-- [ ] **L7-03 `debugging-playbook`** — P0
+- [x] **L7-03 `debugging-playbook`** — P0
+  - 覆盖（4）：`transforms/propagation/test/op_sharding_rule_registry_conservative`
+    `op_sharding_rule_registry_failures` `propagation_pipeline_data_flow_edges`
+    `propagation_pipeline_dedup_functions_fully_true`
+    （L2 层课↔文件分配漂移导致这 4 个文件漏覆盖，L7-03 按「诊断/排查」主题补齐）
   - 讲解：常见问题排查：分片没传播过去 / 出现意外的 all-gather / 不可整除报错 /
     `debug-sharding-origins` 用法 / `module-dump-directory` 用法
   - 验收：给定一个"坏"IR 能定位原因

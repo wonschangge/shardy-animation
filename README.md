@@ -225,6 +225,7 @@ animation/
 | — | **L6 层完成**：10 课 | 74 | ✅ |
 | [`L7-01`](L7-practice/L7-01-end-to-end-walkthrough/) | 端到端走查（P0，5 幕） | 4 | ✅ |
 | [`L7-02`](L7-practice/L7-02-parallelism-strategies/) | 并行策略（P0，6 幕） | 引用 2 | ✅ |
+| [`L7-03`](L7-practice/L7-03-debugging-playbook/) | 调试手册（P0，6 幕） | 4 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
