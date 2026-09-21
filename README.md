@@ -180,6 +180,7 @@ animation/
 | [`L3-07`](L3-import/L3-07-lift-inlined-meshes/) | 提升内联网格（6 幕） | 1 | ✅ |
 | [`L3-08`](L3-import/L3-08-manual-axes-cleanup/) | 清理 manual 轴（7 幕） | 2 | ✅ |
 | [`L3-09`](L3-import/L3-09-sharding-group-import/) | 分片组导入（6 幕） | 2 | ✅ |
+| [`L3-10`](L3-import/L3-10-misc-import-cleanup/) | 杂项导入清理（6 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---

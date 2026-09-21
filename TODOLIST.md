@@ -292,7 +292,7 @@ L?-??-<slug>/
   - 讲解：组传递闭包合并（一个张量同属 G1、G2 ⇒ 合并）；组 id 规范化为 0..N-1；嵌套块约束
   - 验收：给定多个重叠分组，算出合并后的分组
 
-- [ ] **L3-10 `misc-import-cleanup`** — P2
+- [x] **L3-10 `misc-import-cleanup`** — P2
   - 覆盖（3）：`remove_size_one_axes` `pre_order_funcs` `propagate_sharding_from_func_to_call`
   - 讲解：去掉 size=1 轴以免冲突；函数按调用图前序重排（模拟自顶向下传播）；函数结果分片回填到调用点
   - 验收：能说明为什么 size=1 的轴会造成传播冲突
