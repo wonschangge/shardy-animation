@@ -587,7 +587,9 @@ L?-??-<slug>/
   - 讲解：一个完整 StableHLO 程序，从导入到设备代码，**一条时间轴走完所有 pass**，每步可暂停看 IR
   - 验收：能对着动画复述完整流程
 
-- [ ] **L7-02 `parallelism-strategies`** — P0
+- [x] **L7-02 `parallelism-strategies`** — P0
+  - 引用（2，不新增覆盖）：`convert_global_to_local/stablehlo_dot`（L5-05）
+    `executable_convert_global_to_local/stablehlo_dot_general`（L6-04）
   - 讲解：用同一份程序演示数据并行 / 张量并行 / 流水线并行 / ZeRO 的分片标注差异与通信代价对比
   - 验收：给定模型规模与设备数，能选合理策略并说明代价
 
