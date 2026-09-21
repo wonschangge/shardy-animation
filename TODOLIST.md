@@ -196,7 +196,7 @@ L?-??-<slug>/
   - 讲解：与 basic 的差异 —— 冲突如何被"强行"消解、何时引入额外通信、`propagation-strategy` 选项
   - 验收：同一输入分别用 basic/aggressive 跑，说出每处差异的原因
 
-- [ ] **L2-05 `op-priority-propagation`** — P1
+- [x] **L2-05 `op-priority-propagation`** — P1
   - 覆盖（1）：`op_priority_propagation`
   - 讲解：算子按类型分批；方向选择规则 `BOTH > BACKWARD == FORWARD > NONE`；为何逐元素优先于 dot
   - 验收：能预测某算子在某一轮的传播方向
