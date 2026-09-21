@@ -422,7 +422,7 @@ L?-??-<slug>/
 **覆盖**：`export/test/convert_global_to_local/`(23) + `export/test/pad_for_divisibility/`(12) — 35 文件 / 4,240 行
 **前置**：L4-08
 
-- [ ] **L5-01 `global-to-local-overview`** — P0
+- [x] **L5-01 `global-to-local-overview`** — P0
   - 覆盖（2）：`convert_global_to_local/generic_ops` `convert_global_to_local/replica_id`
   - 讲解：类型转换器总体思路；`replica-count` / `partition-count` 作用；`enable-rgv3` / `per-dim-all-gather` 选项
   - 验收：能算出任意 sharding 对应的局部类型

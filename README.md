@@ -202,7 +202,8 @@ animation/
 | [`L4-16`](L4-export/L4-16-sink-and-convert/) | 边下沉与转换（6 幕） | 3 | ✅ |
 | [`L4-17`](L4-export/L4-17-merger-and-debug-cleanup/) | 合并与调试清理（6 幕） | 3 | ✅ |
 | — | **L4 层完成**：17 课 | 55 | ✅ |
-| L5-01 | 见 [TODOLIST.md §2](TODOLIST.md) —— 下一层：传播算法 | | ⬜ |
+| [`L5-01`](L5-lowering/L5-01-global-to-local-overview/) | 全局转局部总览（6 幕） | 2 | ✅ |
+| … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
 
