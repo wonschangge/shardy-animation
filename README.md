@@ -151,6 +151,7 @@ animation/
 | [`L1-02`](L1-ir/L1-02-tensor-sharding-syntax/) | 张量分片属性语法 `#sdy.sharding`（10 幕） | 2 | ✅ |
 | [`L1-03`](L1-ir/L1-03-tensor-sharding-verification/) | 分片校验不变量（33 类错误 / 9 幕） | 1 | ✅ |
 | [`L1-04`](L1-ir/L1-04-edge-sharding/) | 边分片与传播调试信息 `propagation_edges`（7 幕） | 2 | ✅ |
+| [`L1-05`](L1-ir/L1-05-op-sharding-rule/) | 算子分片规则 `op_sharding_rule`（9 幕） | 3 | ✅ |
 | … | 见 [TODOLIST.md §2](TODOLIST.md) | | ⬜ |
 
 ---
