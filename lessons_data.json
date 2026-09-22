@@ -1,0 +1,796 @@
+{
+  "layers": {
+    "intro": {
+      "name": "预备篇",
+      "title": "直觉建立",
+      "desc": "从零建立张量切分直觉，理解 Mesh、Sharding、传播与通信"
+    },
+    "L1": {
+      "name": "第 1 层：IR 构件",
+      "title": "看懂语法",
+      "desc": "认识 SDY 方言每个构件，读懂所有 .mlir 文件与不变量"
+    },
+    "L2": {
+      "name": "第 2 层：传播算法",
+      "title": "理解算法",
+      "desc": "预测传播结果，看懂启发式、优先级与调试输出"
+    },
+    "L3": {
+      "name": "第 3 层：导入准备",
+      "title": "理解准备",
+      "desc": "掌握传播前规范化、切分约束、Mesh 提取与数据流边"
+    },
+    "L4": {
+      "name": "第 4 层：导出核心",
+      "title": "理解代价",
+      "desc": "理解通信从何而来，Reshard 如何转化为集合通信与优化"
+    },
+    "L5": {
+      "name": "第 5 层：全局降级",
+      "title": "理解降级",
+      "desc": "Global-to-Local：看懂全局张量如何变成单卡局部张量"
+    },
+    "L6": {
+      "name": "第 6 层：可执行验证",
+      "title": "验证正确",
+      "desc": "在真实设备/模拟器上执行测试，验证数值等价与通信"
+    },
+    "L7": {
+      "name": "第 7 层：综合实战",
+      "title": "综合运用",
+      "desc": "端到端走通大模型并行策略与调试排错手册"
+    }
+  },
+  "lessons": [
+    {
+      "id": "intro",
+      "layer_id": "intro",
+      "layer_name": "预备篇",
+      "code": "INTRO",
+      "title": "从零理解张量切分与 Shardy 直觉",
+      "subtitle": "20 幕核心动画，建立对逻辑网格、张量分片、广播传播与集合通信的直觉认识",
+      "path": "intro/index.html",
+      "scenes": 20
+    },
+    {
+      "id": "L1-01-mesh-and-devices",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-01",
+      "title": "逻辑网格与设备编号",
+      "subtitle": "说出 `sdy.mesh` 三个组成部分（符号名 / 轴列表 / 可选设备编号）各自的作用",
+      "path": "L1-ir/L1-01-mesh-and-devices/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L1-02-tensor-sharding-syntax",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-02",
+      "title": "张量分片属性语法",
+      "subtitle": "区分 `sdy.sharding`（函数上）与 `#sdy.sharding_per_value`（算子上，多一层列表）",
+      "path": "L1-ir/L1-02-tensor-sharding-syntax/index.html",
+      "scenes": 10
+    },
+    {
+      "id": "L1-03-tensor-sharding-verification",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-03",
+      "title": "分片校验不变量",
+      "subtitle": "区分**解析错误**（`failed to parse`）与**校验错误**（语义非法）",
+      "path": "L1-ir/L1-03-tensor-sharding-verification/index.html",
+      "scenes": 9
+    },
+    {
+      "id": "L1-04-edge-sharding",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-04",
+      "title": "边分片与传播调试信息",
+      "subtitle": "说清 `sdy.propagation_edges` 记录的是什么（谁在第几步把哪条轴传给了谁）",
+      "path": "L1-ir/L1-04-edge-sharding/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L1-05-op-sharding-rule",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-05",
+      "title": "算子分片规则",
+      "subtitle": "说清分片规则的作用（把算子语义与传播算法解耦）",
+      "path": "L1-ir/L1-05-op-sharding-rule/index.html",
+      "scenes": 9
+    },
+    {
+      "id": "L1-06-collectives",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-06",
+      "title": "集合通信算子",
+      "subtitle": "说出 8 个集合通信算子各自的作用与分组（搬数据 / 做归约 / 管未归约状态）",
+      "path": "L1-ir/L1-06-collectives/index.html",
+      "scenes": 10
+    },
+    {
+      "id": "L1-07-manual-computation",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-07",
+      "title": "手动计算",
+      "subtitle": "说清 `sdy.manual_computation` 的用途（在传播之外开一个「我自己来」的口子）",
+      "path": "L1-ir/L1-07-manual-computation/index.html",
+      "scenes": 8
+    },
+    {
+      "id": "L1-08-named-computation-and-dataflow",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-08",
+      "title": "命名计算与数据流边",
+      "subtitle": "说清 `sdy.named_computation` 解决什么问题（让传播穿过函数调用）",
+      "path": "L1-ir/L1-08-named-computation-and-dataflow/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L1-09-constraint-group-barrier",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-09",
+      "title": "约束类算子",
+      "subtitle": "说出三个算子的分工：**钉分片**（constraint）、**强制同分片**（group）、**截断方向**（barrier）",
+      "path": "L1-ir/L1-09-constraint-group-barrier/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L1-10-reshard-and-constant",
+      "layer_id": "L1",
+      "layer_name": "第 1 层：IR 构件",
+      "code": "L1-10",
+      "title": "重分片与常量（L1 收官）",
+      "subtitle": "说出 `sdy.reshard` 的**生命周期**：约束 → 传播 → reshard → collective",
+      "path": "L1-ir/L1-10-reshard-and-constant/index.html",
+      "scenes": 8
+    },
+    {
+      "id": "L2-01-basic-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-01",
+      "title": "基础传播",
+      "subtitle": "描述传播是「沿数据流迭代到不动点」的过程",
+      "path": "L2-propagation/L2-01-basic-propagation/index.html",
+      "scenes": 10
+    },
+    {
+      "id": "L2-02-conservative-mode",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-02",
+      "title": "保守传播模式",
+      "subtitle": "说出 `conservative-propagation=true` 的两条禁令（**禁止分裂轴**、**禁止不可整除**）",
+      "path": "L2-propagation/L2-02-conservative-mode/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L2-03-keep-sharding-rules",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-03",
+      "title": "保留分片规则",
+      "subtitle": "说出 `keep-sharding-rules=true` 的作用与它**不改变**什么",
+      "path": "L2-propagation/L2-03-keep-sharding-rules/index.html",
+      "scenes": 4
+    },
+    {
+      "id": "L2-04-aggressive-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-04",
+      "title": "激进传播",
+      "subtitle": "说出激进传播比基础传播**多做**什么、以及它**不做**什么",
+      "path": "L2-propagation/L2-04-aggressive-propagation/index.html",
+      "scenes": 8
+    },
+    {
+      "id": "L2-05-op-priority-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-05",
+      "title": "算子优先级传播",
+      "subtitle": "说出算子优先级传播的**机制**（按算子类型分批、每批跑一遍完整激进传播）",
+      "path": "L2-propagation/L2-05-op-priority-propagation/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L2-06-user-priority-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-06",
+      "title": "用户优先级传播",
+      "subtitle": "说出用户优先级在传播金字塔中的位置与嵌套关系",
+      "path": "L2-propagation/L2-06-user-priority-propagation/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L2-07-sharding-group-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-07",
+      "title": "分片组传播",
+      "subtitle": "说出分片组是传播里的**第二条通道**（绕开数据流）",
+      "path": "L2-propagation/L2-07-sharding-group-propagation/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L2-08-data-flow-edges",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-08",
+      "title": "数据流边传播",
+      "subtitle": "说出区域算子（`while` / `case` / `optimization_barrier` / `manual_computation`）的",
+      "path": "L2-propagation/L2-08-data-flow-edges/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L2-09-manual-computation-propagation",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-09",
+      "title": "手动计算的传播",
+      "subtitle": "说出手动计算在传播中的角色（**不是墙，是带过滤的膜**）",
+      "path": "L2-propagation/L2-09-manual-computation-propagation/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L2-10-op-sharding-rule-registry",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-10",
+      "title": "算子分片规则注册表",
+      "subtitle": "说出这个 pass 的作用（**把注册表推导出的规则打印出来**）",
+      "path": "L2-propagation/L2-10-op-sharding-rule-registry/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L2-11-propagation-pipeline",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-11",
+      "title": "传播完整流水线",
+      "subtitle": "说出完整流水线做了哪 7 步",
+      "path": "L2-propagation/L2-11-propagation-pipeline/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L2-12-propagation-debugging",
+      "layer_id": "L2",
+      "layer_name": "第 2 层：传播算法",
+      "code": "L2-12",
+      "title": "传播调试（L2 收官）",
+      "subtitle": "说出两个调试属性各自回答什么问题",
+      "path": "L2-propagation/L2-12-propagation-debugging/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-01-import-pipeline-overview",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-01",
+      "title": "导入流水线总览",
+      "subtitle": "说出导入流水线的**目的**（把用户 IR 规范化成传播友好的形态）",
+      "path": "L3-import/L3-01-import-pipeline-overview/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-02-constant-splitter",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-02",
+      "title": "常量与标量拆分（★ 全计划最大课）",
+      "subtitle": "说出**假依赖**是什么、为什么必须消除",
+      "path": "L3-import/L3-02-constant-splitter/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-03-apply-sharding-constraints",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-03",
+      "title": "应用分片约束",
+      "subtitle": "说出「**下沉**」是什么、为什么要做",
+      "path": "L3-import/L3-03-apply-sharding-constraints/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-04-add-data-flow-edges",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-04",
+      "title": "插入数据流边",
+      "subtitle": "说出**哪些位置**需要插边（区域外结果 / 区域内块参数）",
+      "path": "L3-import/L3-04-add-data-flow-edges/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-05-add-func-data-flow-edges",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-05",
+      "title": "插入函数级数据流边",
+      "subtitle": "说出函数级边的**两个插入位置**",
+      "path": "L3-import/L3-05-add-func-data-flow-edges/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-06-import-func-calls",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-06",
+      "title": "内联函数调用",
+      "subtitle": "说出 `call` → `named_computation` 时同时发生的**四件事**",
+      "path": "L3-import/L3-06-import-func-calls/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-07-lift-inlined-meshes",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-07",
+      "title": "提升内联网格",
+      "subtitle": "说出内联 mesh 的**问题**与提升的**目的**",
+      "path": "L3-import/L3-07-lift-inlined-meshes/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-08-manual-axes-cleanup",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-08",
+      "title": "清理 manual 轴",
+      "subtitle": "说出这个 pass 的**三个动作**",
+      "path": "L3-import/L3-08-manual-axes-cleanup/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L3-09-sharding-group-import",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-09",
+      "title": "分片组导入",
+      "subtitle": "说出组的**两个规范化动作**（合并重叠 / 重编号）",
+      "path": "L3-import/L3-09-sharding-group-import/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-10-misc-import-cleanup",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-10",
+      "title": "杂项导入清理",
+      "subtitle": "说出为什么大小为 1 的轴要删、以及**网格定义为什么不变**",
+      "path": "L3-import/L3-10-misc-import-cleanup/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L3-11-gather-scatter-batching",
+      "layer_id": "L3",
+      "layer_name": "第 3 层：导入准备",
+      "code": "L3-11",
+      "title": "gather/scatter 批维显式化（L3 收官）",
+      "subtitle": "说出这个变换**做了什么**（隐式批维 → 显式批维）",
+      "path": "L3-import/L3-11-gather-scatter-batching/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-01-export-pipeline-overview",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-01",
+      "title": "导出流水线总览",
+      "subtitle": "说出 L3 与 L4 的**分工**",
+      "path": "L4-export/L4-01-export-pipeline-overview/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-02-reshard-insertion-overview",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-02",
+      "title": "reshard 插入总纲",
+      "subtitle": "说出**为什么传播后还需要插入 reshard**（本课中心思想）",
+      "path": "L4-export/L4-02-reshard-insertion-overview/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-03-reshard-elementwise-shape",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-03",
+      "title": "逐元素与形状类的 reshard",
+      "subtitle": "说出逐元素算子的**三条位置规则**（\"更大\"的一侧优先）",
+      "path": "L4-export/L4-03-reshard-elementwise-shape/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-04-reshard-matmul-conv",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-04",
+      "title": "矩阵与卷积类的 reshard",
+      "subtitle": "说出 `dot` 的**三类情形**（零通信 / all_reduce / reduce-scatter 模式）",
+      "path": "L4-export/L4-04-reshard-matmul-conv/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-05-reshard-reduction",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-05",
+      "title": "归约与排序类的 reshard",
+      "subtitle": "说出 `reduce` 的两类情形（归约维切没切）",
+      "path": "L4-export/L4-05-reshard-reduction/index.html",
+      "scenes": 7
+    },
+    {
+      "id": "L4-06-reshard-memory-ops",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-06",
+      "title": "访存与通信类的 reshard",
+      "subtitle": "说出 `gather` 的处理**与 `dot` 同构**及原因",
+      "path": "L4-export/L4-06-reshard-memory-ops/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-07-reshard-structure",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-07",
+      "title": "结构性场景的 reshard（L4 算子族收官）",
+      "subtitle": "说出**四类边界**（区域 / 函数 / mesh / 单设备）及各自的 reshard 位置",
+      "path": "L4-export/L4-07-reshard-structure/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-08-reshard-to-collectives",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-08",
+      "title": "reshard 转集合通信（★ 核心）",
+      "subtitle": "背出**核心对照表**（分片变化 → 通信）",
+      "path": "L4-export/L4-08-reshard-to-collectives/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-09-resolve-permutation-factors",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-09",
+      "title": "置换因子消解",
+      "subtitle": "说出 **permutation 因子**为什么让分片无法直接对应",
+      "path": "L4-export/L4-09-resolve-permutation-factors/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-10-optimize-collectives",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-10",
+      "title": "通信优化",
+      "subtitle": "说出这个优化**做了什么**、省下了什么",
+      "path": "L4-export/L4-10-optimize-collectives/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-11-per-instruction-partitioning",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-11",
+      "title": "逐指令分区",
+      "subtitle": "说出被选中 / 未被选中的指令**分别怎么处理**",
+      "path": "L4-export/L4-11-per-instruction-partitioning/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-12-export-named-computations",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-12",
+      "title": "导出命名计算",
+      "subtitle": "**预测 outline 后的函数签名**（TODOLIST 验收点）",
+      "path": "L4-export/L4-12-export-named-computations/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-13-call-graph-flatten-unflatten",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-13",
+      "title": "调用图还原",
+      "subtitle": "**判断两个函数在给定选项下是否会被合并**（TODOLIST 验收点）",
+      "path": "L4-export/L4-13-call-graph-flatten-unflatten/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-14-single-device-and-unreduced",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-14",
+      "title": "单设备与未归约",
+      "subtitle": "说出单设备分片在导出期**怎么处理**",
+      "path": "L4-export/L4-14-single-device-and-unreduced/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-15-export-finalize",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-15",
+      "title": "导出收尾（P0）",
+      "subtitle": "**给一段 IR，说出该跑哪几个收尾 pass、顺序如何**（TODOLIST 验收点）",
+      "path": "L4-export/L4-15-export-finalize/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-16-sink-and-convert",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-16",
+      "title": "边下沉与转换",
+      "subtitle": "**预测下沉后分片落在哪个值上**（TODOLIST 验收点）",
+      "path": "L4-export/L4-16-sink-and-convert/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L4-17-merger-and-debug-cleanup",
+      "layer_id": "L4",
+      "layer_name": "第 4 层：导出核心",
+      "code": "L4-17",
+      "title": "合并与调试清理（L4 收官）",
+      "subtitle": "说出 L3-02 **拆开**常量与本课**合并**常量为什么**两次都对**",
+      "path": "L4-export/L4-17-merger-and-debug-cleanup/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L5-01-global-to-local-overview",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-01",
+      "title": "全局转局部总览（L5 开篇）",
+      "subtitle": "**算出任意 sharding 对应的局部类型**（TODOLIST 验收点）",
+      "path": "L5-lowering/L5-01-global-to-local-overview/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L5-02-lowering-sdy-collectives",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-02",
+      "title": "集合通信降级（P0）",
+      "subtitle": "**写出某个 `sdy.all_gather` 对应的 `stablehlo.all_gather` 关键属性**（TODOLIST 验收点）",
+      "path": "L5-lowering/L5-02-lowering-sdy-collectives/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L5-03-lowering-sdy-structural",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-03",
+      "title": "结构算子降级",
+      "subtitle": "**预测 `manual_computation` 展开后的形状**（TODOLIST 验收点）",
+      "path": "L5-lowering/L5-03-lowering-sdy-structural/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L5-04-lowering-elementwise-shape",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-04",
+      "title": "形状类降级",
+      "subtitle": "用**一条判据**判断形状类算子该怎么局部化",
+      "path": "L5-lowering/L5-04-lowering-elementwise-shape/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L5-05-lowering-matmul",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-05",
+      "title": "矩阵乘降级（P0）",
+      "subtitle": "说出**六种分片情形**分别对应哪种**经典并行策略**",
+      "path": "L5-lowering/L5-05-lowering-matmul/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L5-06-lowering-convolution",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-06",
+      "title": "卷积降级",
+      "subtitle": "说出卷积的**六个用例**分别按哪个维度分片、是否需要通信",
+      "path": "L5-lowering/L5-06-lowering-convolution/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L5-07-lowering-reduction",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-07",
+      "title": "归约降级",
+      "subtitle": "说出归约类降级的**一条判据**（归约是否跨设备）",
+      "path": "L5-lowering/L5-07-lowering-reduction/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L5-08-lowering-gather-scatter",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-08",
+      "title": "访存类降级",
+      "subtitle": "说出访存类算子**为什么最难降级**",
+      "path": "L5-lowering/L5-08-lowering-gather-scatter/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L5-09-pad-for-divisibility",
+      "layer_id": "L5",
+      "layer_name": "第 5 层：全局降级",
+      "code": "L5-09",
+      "title": "为整除性补齐（P0 · L5 收官）",
+      "subtitle": "**给定 `tensor<7x3x8>` 沿 `z=3` 分片，写出补齐后形状与 pad 参数**（TODOLIST 验收点）",
+      "path": "L5-lowering/L5-09-pad-for-divisibility/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-00-executable-test-mechanism",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-00",
+      "title": "可执行测试机制（P0 · L6 开篇）",
+      "subtitle": "**独立写出一个最小可执行测试并通过**（TODOLIST 验收点）",
+      "path": "L6-execution/L6-00-executable-test-mechanism/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-01-exec-sdy-collectives",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-01",
+      "title": "sdy 集合通信的执行（P0）",
+      "subtitle": "**预测每台设备的结果**（给定输入与归约轴）",
+      "path": "L6-execution/L6-01-exec-sdy-collectives/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-02-exec-stablehlo-collectives",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-02",
+      "title": "stablehlo 通信的执行",
+      "subtitle": "**说出与 L6-01 对应文件的异同**（TODOLIST 验收点）",
+      "path": "L6-execution/L6-02-exec-stablehlo-collectives/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-03-exec-convolution",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-03",
+      "title": "卷积的执行",
+      "subtitle": "说出四个 `shard_*` 文件分别验证哪种分片维度",
+      "path": "L6-execution/L6-03-exec-convolution/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-04-exec-matmul-fft-iota",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-04",
+      "title": "矩阵乘 / FFT / iota 的执行",
+      "subtitle": "**解释 `dot_general_indivisible` 为何需要 padding**（TODOLIST 验收点）",
+      "path": "L6-execution/L6-04-exec-matmul-fft-iota/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-05-exec-gather",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-05",
+      "title": "gather 的执行（P0 · ★ 最复杂）",
+      "subtitle": "说出 gather 的索引重映射**在数值上如何被验证**",
+      "path": "L6-execution/L6-05-exec-gather/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-06-exec-pad",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-06",
+      "title": "pad 的执行（P0 · ★ 本层最大族）",
+      "subtitle": "**说出 `pad` 为什么是本层最大族**",
+      "path": "L6-execution/L6-06-exec-pad/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L6-07-exec-reshape",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-07",
+      "title": "reshape 的执行（P0）",
+      "subtitle": "说出 `reshape` 降级的**三步模式**",
+      "path": "L6-execution/L6-07-exec-reshape/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L6-08-exec-reverse-slice",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-08",
+      "title": "slice / reverse 的执行",
+      "subtitle": "说出 `slice` 降级的**核心判据**",
+      "path": "L6-execution/L6-08-exec-reverse-slice/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L6-09-exec-scatter-and-misc",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-09",
+      "title": "scatter 与杂项（L6 收官）",
+      "subtitle": "**解释 scatter 隐式维与显式维分片的区别**（TODOLIST 验收点）",
+      "path": "L6-execution/L6-09-exec-scatter-and-misc/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L6-10-exec-single-device-and-alltoall",
+      "layer_id": "L6",
+      "layer_name": "第 6 层：可执行验证",
+      "code": "L6-10",
+      "title": "单设备与 all-to-all（P2 · L6 最后一课）",
+      "subtitle": "**说明单设备分片如何被执行**（TODOLIST 验收点）",
+      "path": "L6-execution/L6-10-exec-single-device-and-alltoall/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L7-01-end-to-end-walkthrough",
+      "layer_id": "L7",
+      "layer_name": "第 7 层：综合实战",
+      "code": "L7-01",
+      "title": "端到端走查（P0 · L7 开篇）",
+      "subtitle": "说出**空轴网格** `sdy.mesh @m = <[], device_ids=[0]>` 的含义与用途",
+      "path": "L7-practice/L7-01-end-to-end-walkthrough/index.html",
+      "scenes": 5
+    },
+    {
+      "id": "L7-02-parallelism-strategies",
+      "layer_id": "L7",
+      "layer_name": "第 7 层：综合实战",
+      "code": "L7-02",
+      "title": "并行策略（P0）",
+      "subtitle": "**给定模型规模与设备数，选合理策略并说明代价**（TODOLIST 验收点）",
+      "path": "L7-practice/L7-02-parallelism-strategies/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L7-03-debugging-playbook",
+      "layer_id": "L7",
+      "layer_name": "第 7 层：综合实战",
+      "code": "L7-03",
+      "title": "调试手册（P0）",
+      "subtitle": "**给定一个「坏」IR 能定位原因**（TODOLIST 验收点）",
+      "path": "L7-practice/L7-03-debugging-playbook/index.html",
+      "scenes": 6
+    },
+    {
+      "id": "L7-04-dialect-agnostic-integration",
+      "layer_id": "L7",
+      "layer_name": "第 7 层：综合实战",
+      "code": "L7-04",
+      "title": "跨方言集成（P1 · **全部 75 课的最后一课**）",
+      "subtitle": "**写出一条自定义算子的 sharding rule 并被传播正确使用**（TODOLIST 验收点）",
+      "path": "L7-practice/L7-04-dialect-agnostic-integration/index.html",
+      "scenes": 6
+    }
+  ]
+}

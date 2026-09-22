@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shardy Animations · OpenXLA SDY 交互式动画课件全景</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='7' height='7' x='1' y='1' rx='1.5' fill='%2338bdf8'/%3E%3Crect width='7' height='7' x='8' y='1' rx='1.5' fill='%23c084fc'/%3E%3Crect width='7' height='7' x='1' y='8' rx='1.5' fill='%23fbbf24'/%3E%3Crect width='7' height='7' x='8' y='8' rx='1.5' fill='%23fb7185'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg0: #080c18;
+  --bg1: #0d1428;
+  --panel: rgba(255, 255, 255, .045);
+  --panel-hover: rgba(255, 255, 255, .075);
+  --panel-brd: rgba(255, 255, 255, .10);
+  --panel-brd-hover: rgba(94, 234, 212, .35);
+  --ink: #e8eefc;
+  --ink-dim: #93a3c4;
+  --ink-faint: #5d6d8f;
+  --accent: #5eead4;
+  --accent2: #818cf8;
+  --warn: #fbbf24;
+  --bad: #fb7185;
+  --ok: #4ade80;
+  --mono: "SFMono-Regular", Menlo, Consolas, "DejaVu Sans Mono", "Noto Sans Mono CJK SC", monospace;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: radial-gradient(1200px 900px at 50% -10%, #16224a 0%, var(--bg1) 40%, var(--bg0) 100%);
+  color: var(--ink);
+  font-family: var(--sans);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* Header / Hero */
+.hero {
+  text-align: center;
+  padding: 30px 10px 48px;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(94, 234, 212, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(94, 234, 212, 0.3);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-badge::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.hero-title {
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 40%, #93a3c4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-desc {
+  font-size: 18px;
+  color: var(--ink-dim);
+  max-width: 820px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%);
+  color: #042f2e;
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.25);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.4);
+}
+.btn-secondary {
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--panel-brd);
+}
+.btn-secondary:hover {
+  background: var(--panel-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Stat Chips */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--panel-brd);
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.stat-val {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: var(--mono);
+}
+.stat-lbl {
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+/* Search & Filters */
+.toolbar {
+  position: sticky;
+  top: 16px;
+  z-index: 100;
+  background: rgba(13, 20, 40, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--panel-brd);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+.search-box {
+  position: relative;
+  width: 100%;
+}
+.search-input {
+  width: 100%;
+  background: rgba(8, 12, 24, 0.7);
+  border: 1px solid var(--panel-brd);
+  color: var(--ink);
+  padding: 12px 16px 12px 42px;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  font-family: var(--sans);
+  transition: border-color 0.2s;
+}
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(94, 234, 212, 0.2);
+}
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+.filter-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.filter-tab {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.filter-tab:hover {
+  color: var(--ink);
+  background: var(--panel);
+}
+.filter-tab.active {
+  color: var(--bg0);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Layer Sections */
+.layer-section {
+  margin-bottom: 44px;
+  transition: opacity 0.3s;
+}
+.layer-section.hidden {
+  display: none;
+}
+.layer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--panel-brd);
+}
+.layer-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.layer-badge {
+  font-size: 13px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-family: var(--mono);
+}
+.layer-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.layer-sub {
+  font-size: 14px;
+  color: var(--ink-dim);
+  margin-left: 4px;
+}
+.layer-meta {
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-family: var(--mono);
+}
+
+/* Lesson Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--panel-brd);
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--card-color, var(--accent));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.card:hover {
+  background: var(--panel-hover);
+  border-color: var(--panel-brd-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+}
+.card:hover::after {
+  opacity: 1;
+}
+.card.hidden {
+  display: none;
+}
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.card-code {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--card-color, var(--accent));
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.card-scenes {
+  font-size: 12px;
+  color: var(--ink-faint);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+.card-desc {
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+  margin-bottom: 16px;
+  flex: 1;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.card-link-txt {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--card-color, var(--accent));
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.card:hover .card-link-txt {
+  text-decoration: underline;
+}
+
+/* Empty Search State */
+#empty-state {
+  display: none;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--ink-dim);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 50px 20px 20px;
+  color: var(--ink-faint);
+  font-size: 13.5px;
+  border-top: 1px solid var(--panel-brd);
+  margin-top: 60px;
+}
+footer a {
+  color: var(--ink-dim);
+  text-decoration: underline;
+}
+footer a:hover {
+  color: var(--accent);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="hero-badge">Interactive Learning Platform</div>
+    <h1 class="hero-title">Shardy Animations</h1>
+    <p class="hero-desc">
+      把 OpenXLA <strong>Shardy (SDY 方言)</strong> 从核心语法、分片约束、启发式传播一直到分区器产出的低级设备代码，做成完全交互式的动画拆解。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="intro/index.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        立即开始 · 预备篇体验
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/openxla/shardy" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        OpenXLA / Shardy
+      </a>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-val">75</div>
+        <div class="stat-lbl">全交互动画课件</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">241</div>
+        <div class="stat-lbl">测试 IR 逐字覆盖</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">7 + 1</div>
+        <div class="stat-lbl">渐进式学习分层</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">100%</div>
+        <div class="stat-lbl">纯静态零依赖运行</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sticky Filter & Search Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="search" class="search-input" placeholder="按课号、标题、概念搜索（如 mesh, reshard, L2, L5...）快捷键 /">
+    </div>
+    <div class="filter-tabs" id="filter-tabs">
+      <button class="filter-tab active" data-layer="all">全部 (75)</button>
+      <button class="filter-tab" data-layer="intro">预备篇 (1)</button>
+      <button class="filter-tab" data-layer="L1">L1 语法 (10)</button>
+      <button class="filter-tab" data-layer="L2">L2 传播 (12)</button>
+      <button class="filter-tab" data-layer="L3">L3 导入 (11)</button>
+      <button class="filter-tab" data-layer="L4">L4 导出 (17)</button>
+      <button class="filter-tab" data-layer="L5">L5 降级 (9)</button>
+      <button class="filter-tab" data-layer="L6">L6 执行 (11)</button>
+      <button class="filter-tab" data-layer="L7">L7 实战 (4)</button>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <main id="course-list">
+
+    <section class="layer-section" data-layer-id="intro">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #38bdf8">预备篇</span>
+          <h2 class="layer-title">预备篇</h2>
+          <span class="layer-sub">从零建立张量切分直觉，理解 Mesh、Sharding、传播与通信</span>
+        </div>
+        <div class="layer-meta">20 幕</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="intro/index.html" style="--card-color: #38bdf8" data-code="intro" data-title="从零理解张量切分与 shardy 直觉" data-sub="20 幕核心动画，建立对逻辑网格、张量分片、广播传播与集合通信的直觉认识">
+          <div>
+            <div class="card-top">
+              <span class="card-code">INTRO</span>
+              <span class="card-scenes">20 幕场景</span>
+            </div>
+            <h3 class="card-title">从零理解张量切分与 Shardy 直觉</h3>
+            <p class="card-desc">20 幕核心动画，建立对逻辑网格、张量分片、广播传播与集合通信的直觉认识</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L1">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #818cf8">L1</span>
+          <h2 class="layer-title">第 1 层：IR 构件</h2>
+          <span class="layer-sub">认识 SDY 方言每个构件，读懂所有 .mlir 文件与不变量</span>
+        </div>
+        <div class="layer-meta">10 课 · 28 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L1-ir/L1-01-mesh-and-devices/index.html" style="--card-color: #818cf8" data-code="l1-01" data-title="逻辑网格与设备编号" data-sub="说出 `sdy.mesh` 三个组成部分（符号名 / 轴列表 / 可选设备编号）各自的作用">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-01</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">逻辑网格与设备编号</h3>
+            <p class="card-desc">说出 `sdy.mesh` 三个组成部分（符号名 / 轴列表 / 可选设备编号）各自的作用</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-02-tensor-sharding-syntax/index.html" style="--card-color: #818cf8" data-code="l1-02" data-title="张量分片属性语法" data-sub="区分 `sdy.sharding`（函数上）与 `#sdy.sharding_per_value`（算子上，多一层列表）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-02</span>
+              <span class="card-scenes">10 幕场景</span>
+            </div>
+            <h3 class="card-title">张量分片属性语法</h3>
+            <p class="card-desc">区分 `sdy.sharding`（函数上）与 `#sdy.sharding_per_value`（算子上，多一层列表）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-03-tensor-sharding-verification/index.html" style="--card-color: #818cf8" data-code="l1-03" data-title="分片校验不变量" data-sub="区分**解析错误**（`failed to parse`）与**校验错误**（语义非法）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-03</span>
+              <span class="card-scenes">9 幕场景</span>
+            </div>
+            <h3 class="card-title">分片校验不变量</h3>
+            <p class="card-desc">区分**解析错误**（`failed to parse`）与**校验错误**（语义非法）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-04-edge-sharding/index.html" style="--card-color: #818cf8" data-code="l1-04" data-title="边分片与传播调试信息" data-sub="说清 `sdy.propagation_edges` 记录的是什么（谁在第几步把哪条轴传给了谁）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-04</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">边分片与传播调试信息</h3>
+            <p class="card-desc">说清 `sdy.propagation_edges` 记录的是什么（谁在第几步把哪条轴传给了谁）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-05-op-sharding-rule/index.html" style="--card-color: #818cf8" data-code="l1-05" data-title="算子分片规则" data-sub="说清分片规则的作用（把算子语义与传播算法解耦）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-05</span>
+              <span class="card-scenes">9 幕场景</span>
+            </div>
+            <h3 class="card-title">算子分片规则</h3>
+            <p class="card-desc">说清分片规则的作用（把算子语义与传播算法解耦）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-06-collectives/index.html" style="--card-color: #818cf8" data-code="l1-06" data-title="集合通信算子" data-sub="说出 8 个集合通信算子各自的作用与分组（搬数据 / 做归约 / 管未归约状态）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-06</span>
+              <span class="card-scenes">10 幕场景</span>
+            </div>
+            <h3 class="card-title">集合通信算子</h3>
+            <p class="card-desc">说出 8 个集合通信算子各自的作用与分组（搬数据 / 做归约 / 管未归约状态）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-07-manual-computation/index.html" style="--card-color: #818cf8" data-code="l1-07" data-title="手动计算" data-sub="说清 `sdy.manual_computation` 的用途（在传播之外开一个「我自己来」的口子）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-07</span>
+              <span class="card-scenes">8 幕场景</span>
+            </div>
+            <h3 class="card-title">手动计算</h3>
+            <p class="card-desc">说清 `sdy.manual_computation` 的用途（在传播之外开一个「我自己来」的口子）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-08-named-computation-and-dataflow/index.html" style="--card-color: #818cf8" data-code="l1-08" data-title="命名计算与数据流边" data-sub="说清 `sdy.named_computation` 解决什么问题（让传播穿过函数调用）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-08</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">命名计算与数据流边</h3>
+            <p class="card-desc">说清 `sdy.named_computation` 解决什么问题（让传播穿过函数调用）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-09-constraint-group-barrier/index.html" style="--card-color: #818cf8" data-code="l1-09" data-title="约束类算子" data-sub="说出三个算子的分工：**钉分片**（constraint）、**强制同分片**（group）、**截断方向**（barrier）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-09</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">约束类算子</h3>
+            <p class="card-desc">说出三个算子的分工：**钉分片**（constraint）、**强制同分片**（group）、**截断方向**（barrier）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L1-ir/L1-10-reshard-and-constant/index.html" style="--card-color: #818cf8" data-code="l1-10" data-title="重分片与常量（l1 收官）" data-sub="说出 `sdy.reshard` 的**生命周期**：约束 → 传播 → reshard → collective">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L1-10</span>
+              <span class="card-scenes">8 幕场景</span>
+            </div>
+            <h3 class="card-title">重分片与常量（L1 收官）</h3>
+            <p class="card-desc">说出 `sdy.reshard` 的**生命周期**：约束 → 传播 → reshard → collective</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L2">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #c084fc">L2</span>
+          <h2 class="layer-title">第 2 层：传播算法</h2>
+          <span class="layer-sub">预测传播结果，看懂启发式、优先级与调试输出</span>
+        </div>
+        <div class="layer-meta">12 课 · 18 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L2-propagation/L2-01-basic-propagation/index.html" style="--card-color: #c084fc" data-code="l2-01" data-title="基础传播" data-sub="描述传播是「沿数据流迭代到不动点」的过程">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-01</span>
+              <span class="card-scenes">10 幕场景</span>
+            </div>
+            <h3 class="card-title">基础传播</h3>
+            <p class="card-desc">描述传播是「沿数据流迭代到不动点」的过程</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-02-conservative-mode/index.html" style="--card-color: #c084fc" data-code="l2-02" data-title="保守传播模式" data-sub="说出 `conservative-propagation=true` 的两条禁令（**禁止分裂轴**、**禁止不可整除**）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">保守传播模式</h3>
+            <p class="card-desc">说出 `conservative-propagation=true` 的两条禁令（**禁止分裂轴**、**禁止不可整除**）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-03-keep-sharding-rules/index.html" style="--card-color: #c084fc" data-code="l2-03" data-title="保留分片规则" data-sub="说出 `keep-sharding-rules=true` 的作用与它**不改变**什么">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-03</span>
+              <span class="card-scenes">4 幕场景</span>
+            </div>
+            <h3 class="card-title">保留分片规则</h3>
+            <p class="card-desc">说出 `keep-sharding-rules=true` 的作用与它**不改变**什么</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-04-aggressive-propagation/index.html" style="--card-color: #c084fc" data-code="l2-04" data-title="激进传播" data-sub="说出激进传播比基础传播**多做**什么、以及它**不做**什么">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-04</span>
+              <span class="card-scenes">8 幕场景</span>
+            </div>
+            <h3 class="card-title">激进传播</h3>
+            <p class="card-desc">说出激进传播比基础传播**多做**什么、以及它**不做**什么</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-05-op-priority-propagation/index.html" style="--card-color: #c084fc" data-code="l2-05" data-title="算子优先级传播" data-sub="说出算子优先级传播的**机制**（按算子类型分批、每批跑一遍完整激进传播）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-05</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">算子优先级传播</h3>
+            <p class="card-desc">说出算子优先级传播的**机制**（按算子类型分批、每批跑一遍完整激进传播）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-06-user-priority-propagation/index.html" style="--card-color: #c084fc" data-code="l2-06" data-title="用户优先级传播" data-sub="说出用户优先级在传播金字塔中的位置与嵌套关系">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-06</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">用户优先级传播</h3>
+            <p class="card-desc">说出用户优先级在传播金字塔中的位置与嵌套关系</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-07-sharding-group-propagation/index.html" style="--card-color: #c084fc" data-code="l2-07" data-title="分片组传播" data-sub="说出分片组是传播里的**第二条通道**（绕开数据流）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-07</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">分片组传播</h3>
+            <p class="card-desc">说出分片组是传播里的**第二条通道**（绕开数据流）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-08-data-flow-edges/index.html" style="--card-color: #c084fc" data-code="l2-08" data-title="数据流边传播" data-sub="说出区域算子（`while` / `case` / `optimization_barrier` / `manual_computation`）的">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-08</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">数据流边传播</h3>
+            <p class="card-desc">说出区域算子（`while` / `case` / `optimization_barrier` / `manual_computation`）的</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-09-manual-computation-propagation/index.html" style="--card-color: #c084fc" data-code="l2-09" data-title="手动计算的传播" data-sub="说出手动计算在传播中的角色（**不是墙，是带过滤的膜**）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-09</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">手动计算的传播</h3>
+            <p class="card-desc">说出手动计算在传播中的角色（**不是墙，是带过滤的膜**）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-10-op-sharding-rule-registry/index.html" style="--card-color: #c084fc" data-code="l2-10" data-title="算子分片规则注册表" data-sub="说出这个 pass 的作用（**把注册表推导出的规则打印出来**）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-10</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">算子分片规则注册表</h3>
+            <p class="card-desc">说出这个 pass 的作用（**把注册表推导出的规则打印出来**）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-11-propagation-pipeline/index.html" style="--card-color: #c084fc" data-code="l2-11" data-title="传播完整流水线" data-sub="说出完整流水线做了哪 7 步">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-11</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">传播完整流水线</h3>
+            <p class="card-desc">说出完整流水线做了哪 7 步</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L2-propagation/L2-12-propagation-debugging/index.html" style="--card-color: #c084fc" data-code="l2-12" data-title="传播调试（l2 收官）" data-sub="说出两个调试属性各自回答什么问题">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L2-12</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">传播调试（L2 收官）</h3>
+            <p class="card-desc">说出两个调试属性各自回答什么问题</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L3">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #f472b6">L3</span>
+          <h2 class="layer-title">第 3 层：导入准备</h2>
+          <span class="layer-sub">掌握传播前规范化、切分约束、Mesh 提取与数据流边</span>
+        </div>
+        <div class="layer-meta">11 课 · 23 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L3-import/L3-01-import-pipeline-overview/index.html" style="--card-color: #f472b6" data-code="l3-01" data-title="导入流水线总览" data-sub="说出导入流水线的**目的**（把用户 ir 规范化成传播友好的形态）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-01</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">导入流水线总览</h3>
+            <p class="card-desc">说出导入流水线的**目的**（把用户 IR 规范化成传播友好的形态）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-02-constant-splitter/index.html" style="--card-color: #f472b6" data-code="l3-02" data-title="常量与标量拆分（★ 全计划最大课）" data-sub="说出**假依赖**是什么、为什么必须消除">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">常量与标量拆分（★ 全计划最大课）</h3>
+            <p class="card-desc">说出**假依赖**是什么、为什么必须消除</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-03-apply-sharding-constraints/index.html" style="--card-color: #f472b6" data-code="l3-03" data-title="应用分片约束" data-sub="说出「**下沉**」是什么、为什么要做">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-03</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">应用分片约束</h3>
+            <p class="card-desc">说出「**下沉**」是什么、为什么要做</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-04-add-data-flow-edges/index.html" style="--card-color: #f472b6" data-code="l3-04" data-title="插入数据流边" data-sub="说出**哪些位置**需要插边（区域外结果 / 区域内块参数）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-04</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">插入数据流边</h3>
+            <p class="card-desc">说出**哪些位置**需要插边（区域外结果 / 区域内块参数）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-05-add-func-data-flow-edges/index.html" style="--card-color: #f472b6" data-code="l3-05" data-title="插入函数级数据流边" data-sub="说出函数级边的**两个插入位置**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-05</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">插入函数级数据流边</h3>
+            <p class="card-desc">说出函数级边的**两个插入位置**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-06-import-func-calls/index.html" style="--card-color: #f472b6" data-code="l3-06" data-title="内联函数调用" data-sub="说出 `call` → `named_computation` 时同时发生的**四件事**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-06</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">内联函数调用</h3>
+            <p class="card-desc">说出 `call` → `named_computation` 时同时发生的**四件事**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-07-lift-inlined-meshes/index.html" style="--card-color: #f472b6" data-code="l3-07" data-title="提升内联网格" data-sub="说出内联 mesh 的**问题**与提升的**目的**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-07</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">提升内联网格</h3>
+            <p class="card-desc">说出内联 mesh 的**问题**与提升的**目的**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-08-manual-axes-cleanup/index.html" style="--card-color: #f472b6" data-code="l3-08" data-title="清理 manual 轴" data-sub="说出这个 pass 的**三个动作**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-08</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">清理 manual 轴</h3>
+            <p class="card-desc">说出这个 pass 的**三个动作**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-09-sharding-group-import/index.html" style="--card-color: #f472b6" data-code="l3-09" data-title="分片组导入" data-sub="说出组的**两个规范化动作**（合并重叠 / 重编号）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-09</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">分片组导入</h3>
+            <p class="card-desc">说出组的**两个规范化动作**（合并重叠 / 重编号）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-10-misc-import-cleanup/index.html" style="--card-color: #f472b6" data-code="l3-10" data-title="杂项导入清理" data-sub="说出为什么大小为 1 的轴要删、以及**网格定义为什么不变**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-10</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">杂项导入清理</h3>
+            <p class="card-desc">说出为什么大小为 1 的轴要删、以及**网格定义为什么不变**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L3-import/L3-11-gather-scatter-batching/index.html" style="--card-color: #f472b6" data-code="l3-11" data-title="gather/scatter 批维显式化（l3 收官）" data-sub="说出这个变换**做了什么**（隐式批维 → 显式批维）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L3-11</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">gather/scatter 批维显式化（L3 收官）</h3>
+            <p class="card-desc">说出这个变换**做了什么**（隐式批维 → 显式批维）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L4">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #fb7185">L4</span>
+          <h2 class="layer-title">第 4 层：导出核心</h2>
+          <span class="layer-sub">理解通信从何而来，Reshard 如何转化为集合通信与优化</span>
+        </div>
+        <div class="layer-meta">17 课 · 61 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L4-export/L4-01-export-pipeline-overview/index.html" style="--card-color: #fb7185" data-code="l4-01" data-title="导出流水线总览" data-sub="说出 l3 与 l4 的**分工**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-01</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">导出流水线总览</h3>
+            <p class="card-desc">说出 L3 与 L4 的**分工**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-02-reshard-insertion-overview/index.html" style="--card-color: #fb7185" data-code="l4-02" data-title="reshard 插入总纲" data-sub="说出**为什么传播后还需要插入 reshard**（本课中心思想）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">reshard 插入总纲</h3>
+            <p class="card-desc">说出**为什么传播后还需要插入 reshard**（本课中心思想）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-03-reshard-elementwise-shape/index.html" style="--card-color: #fb7185" data-code="l4-03" data-title="逐元素与形状类的 reshard" data-sub="说出逐元素算子的**三条位置规则**（"更大"的一侧优先）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-03</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">逐元素与形状类的 reshard</h3>
+            <p class="card-desc">说出逐元素算子的**三条位置规则**（"更大"的一侧优先）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-04-reshard-matmul-conv/index.html" style="--card-color: #fb7185" data-code="l4-04" data-title="矩阵与卷积类的 reshard" data-sub="说出 `dot` 的**三类情形**（零通信 / all_reduce / reduce-scatter 模式）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-04</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">矩阵与卷积类的 reshard</h3>
+            <p class="card-desc">说出 `dot` 的**三类情形**（零通信 / all_reduce / reduce-scatter 模式）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-05-reshard-reduction/index.html" style="--card-color: #fb7185" data-code="l4-05" data-title="归约与排序类的 reshard" data-sub="说出 `reduce` 的两类情形（归约维切没切）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-05</span>
+              <span class="card-scenes">7 幕场景</span>
+            </div>
+            <h3 class="card-title">归约与排序类的 reshard</h3>
+            <p class="card-desc">说出 `reduce` 的两类情形（归约维切没切）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-06-reshard-memory-ops/index.html" style="--card-color: #fb7185" data-code="l4-06" data-title="访存与通信类的 reshard" data-sub="说出 `gather` 的处理**与 `dot` 同构**及原因">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-06</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">访存与通信类的 reshard</h3>
+            <p class="card-desc">说出 `gather` 的处理**与 `dot` 同构**及原因</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-07-reshard-structure/index.html" style="--card-color: #fb7185" data-code="l4-07" data-title="结构性场景的 reshard（l4 算子族收官）" data-sub="说出**四类边界**（区域 / 函数 / mesh / 单设备）及各自的 reshard 位置">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-07</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">结构性场景的 reshard（L4 算子族收官）</h3>
+            <p class="card-desc">说出**四类边界**（区域 / 函数 / mesh / 单设备）及各自的 reshard 位置</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-08-reshard-to-collectives/index.html" style="--card-color: #fb7185" data-code="l4-08" data-title="reshard 转集合通信（★ 核心）" data-sub="背出**核心对照表**（分片变化 → 通信）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-08</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">reshard 转集合通信（★ 核心）</h3>
+            <p class="card-desc">背出**核心对照表**（分片变化 → 通信）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-09-resolve-permutation-factors/index.html" style="--card-color: #fb7185" data-code="l4-09" data-title="置换因子消解" data-sub="说出 **permutation 因子**为什么让分片无法直接对应">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-09</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">置换因子消解</h3>
+            <p class="card-desc">说出 **permutation 因子**为什么让分片无法直接对应</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-10-optimize-collectives/index.html" style="--card-color: #fb7185" data-code="l4-10" data-title="通信优化" data-sub="说出这个优化**做了什么**、省下了什么">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-10</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">通信优化</h3>
+            <p class="card-desc">说出这个优化**做了什么**、省下了什么</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-11-per-instruction-partitioning/index.html" style="--card-color: #fb7185" data-code="l4-11" data-title="逐指令分区" data-sub="说出被选中 / 未被选中的指令**分别怎么处理**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-11</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">逐指令分区</h3>
+            <p class="card-desc">说出被选中 / 未被选中的指令**分别怎么处理**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-12-export-named-computations/index.html" style="--card-color: #fb7185" data-code="l4-12" data-title="导出命名计算" data-sub="**预测 outline 后的函数签名**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-12</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">导出命名计算</h3>
+            <p class="card-desc">**预测 outline 后的函数签名**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-13-call-graph-flatten-unflatten/index.html" style="--card-color: #fb7185" data-code="l4-13" data-title="调用图还原" data-sub="**判断两个函数在给定选项下是否会被合并**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-13</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">调用图还原</h3>
+            <p class="card-desc">**判断两个函数在给定选项下是否会被合并**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-14-single-device-and-unreduced/index.html" style="--card-color: #fb7185" data-code="l4-14" data-title="单设备与未归约" data-sub="说出单设备分片在导出期**怎么处理**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-14</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">单设备与未归约</h3>
+            <p class="card-desc">说出单设备分片在导出期**怎么处理**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-15-export-finalize/index.html" style="--card-color: #fb7185" data-code="l4-15" data-title="导出收尾（p0）" data-sub="**给一段 ir，说出该跑哪几个收尾 pass、顺序如何**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-15</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">导出收尾（P0）</h3>
+            <p class="card-desc">**给一段 IR，说出该跑哪几个收尾 pass、顺序如何**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-16-sink-and-convert/index.html" style="--card-color: #fb7185" data-code="l4-16" data-title="边下沉与转换" data-sub="**预测下沉后分片落在哪个值上**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-16</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">边下沉与转换</h3>
+            <p class="card-desc">**预测下沉后分片落在哪个值上**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L4-export/L4-17-merger-and-debug-cleanup/index.html" style="--card-color: #fb7185" data-code="l4-17" data-title="合并与调试清理（l4 收官）" data-sub="说出 l3-02 **拆开**常量与本课**合并**常量为什么**两次都对**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L4-17</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">合并与调试清理（L4 收官）</h3>
+            <p class="card-desc">说出 L3-02 **拆开**常量与本课**合并**常量为什么**两次都对**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L5">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #fbbf24">L5</span>
+          <h2 class="layer-title">第 5 层：全局降级</h2>
+          <span class="layer-sub">Global-to-Local：看懂全局张量如何变成单卡局部张量</span>
+        </div>
+        <div class="layer-meta">9 课 · 35 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L5-lowering/L5-01-global-to-local-overview/index.html" style="--card-color: #fbbf24" data-code="l5-01" data-title="全局转局部总览（l5 开篇）" data-sub="**算出任意 sharding 对应的局部类型**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-01</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">全局转局部总览（L5 开篇）</h3>
+            <p class="card-desc">**算出任意 sharding 对应的局部类型**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-02-lowering-sdy-collectives/index.html" style="--card-color: #fbbf24" data-code="l5-02" data-title="集合通信降级（p0）" data-sub="**写出某个 `sdy.all_gather` 对应的 `stablehlo.all_gather` 关键属性**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">集合通信降级（P0）</h3>
+            <p class="card-desc">**写出某个 `sdy.all_gather` 对应的 `stablehlo.all_gather` 关键属性**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-03-lowering-sdy-structural/index.html" style="--card-color: #fbbf24" data-code="l5-03" data-title="结构算子降级" data-sub="**预测 `manual_computation` 展开后的形状**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-03</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">结构算子降级</h3>
+            <p class="card-desc">**预测 `manual_computation` 展开后的形状**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-04-lowering-elementwise-shape/index.html" style="--card-color: #fbbf24" data-code="l5-04" data-title="形状类降级" data-sub="用**一条判据**判断形状类算子该怎么局部化">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-04</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">形状类降级</h3>
+            <p class="card-desc">用**一条判据**判断形状类算子该怎么局部化</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-05-lowering-matmul/index.html" style="--card-color: #fbbf24" data-code="l5-05" data-title="矩阵乘降级（p0）" data-sub="说出**六种分片情形**分别对应哪种**经典并行策略**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-05</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">矩阵乘降级（P0）</h3>
+            <p class="card-desc">说出**六种分片情形**分别对应哪种**经典并行策略**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-06-lowering-convolution/index.html" style="--card-color: #fbbf24" data-code="l5-06" data-title="卷积降级" data-sub="说出卷积的**六个用例**分别按哪个维度分片、是否需要通信">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-06</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">卷积降级</h3>
+            <p class="card-desc">说出卷积的**六个用例**分别按哪个维度分片、是否需要通信</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-07-lowering-reduction/index.html" style="--card-color: #fbbf24" data-code="l5-07" data-title="归约降级" data-sub="说出归约类降级的**一条判据**（归约是否跨设备）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-07</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">归约降级</h3>
+            <p class="card-desc">说出归约类降级的**一条判据**（归约是否跨设备）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-08-lowering-gather-scatter/index.html" style="--card-color: #fbbf24" data-code="l5-08" data-title="访存类降级" data-sub="说出访存类算子**为什么最难降级**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-08</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">访存类降级</h3>
+            <p class="card-desc">说出访存类算子**为什么最难降级**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L5-lowering/L5-09-pad-for-divisibility/index.html" style="--card-color: #fbbf24" data-code="l5-09" data-title="为整除性补齐（p0 · l5 收官）" data-sub="**给定 `tensor<7x3x8>` 沿 `z=3` 分片，写出补齐后形状与 pad 参数**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L5-09</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">为整除性补齐（P0 · L5 收官）</h3>
+            <p class="card-desc">**给定 `tensor<7x3x8>` 沿 `z=3` 分片，写出补齐后形状与 pad 参数**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L6">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #4ade80">L6</span>
+          <h2 class="layer-title">第 6 层：可执行验证</h2>
+          <span class="layer-sub">在真实设备/模拟器上执行测试，验证数值等价与通信</span>
+        </div>
+        <div class="layer-meta">11 课 · 76 文件</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L6-execution/L6-00-executable-test-mechanism/index.html" style="--card-color: #4ade80" data-code="l6-00" data-title="可执行测试机制（p0 · l6 开篇）" data-sub="**独立写出一个最小可执行测试并通过**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-00</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">可执行测试机制（P0 · L6 开篇）</h3>
+            <p class="card-desc">**独立写出一个最小可执行测试并通过**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-01-exec-sdy-collectives/index.html" style="--card-color: #4ade80" data-code="l6-01" data-title="sdy 集合通信的执行（p0）" data-sub="**预测每台设备的结果**（给定输入与归约轴）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-01</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">sdy 集合通信的执行（P0）</h3>
+            <p class="card-desc">**预测每台设备的结果**（给定输入与归约轴）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-02-exec-stablehlo-collectives/index.html" style="--card-color: #4ade80" data-code="l6-02" data-title="stablehlo 通信的执行" data-sub="**说出与 l6-01 对应文件的异同**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">stablehlo 通信的执行</h3>
+            <p class="card-desc">**说出与 L6-01 对应文件的异同**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-03-exec-convolution/index.html" style="--card-color: #4ade80" data-code="l6-03" data-title="卷积的执行" data-sub="说出四个 `shard_*` 文件分别验证哪种分片维度">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-03</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">卷积的执行</h3>
+            <p class="card-desc">说出四个 `shard_*` 文件分别验证哪种分片维度</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-04-exec-matmul-fft-iota/index.html" style="--card-color: #4ade80" data-code="l6-04" data-title="矩阵乘 / fft / iota 的执行" data-sub="**解释 `dot_general_indivisible` 为何需要 padding**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-04</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">矩阵乘 / FFT / iota 的执行</h3>
+            <p class="card-desc">**解释 `dot_general_indivisible` 为何需要 padding**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-05-exec-gather/index.html" style="--card-color: #4ade80" data-code="l6-05" data-title="gather 的执行（p0 · ★ 最复杂）" data-sub="说出 gather 的索引重映射**在数值上如何被验证**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-05</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">gather 的执行（P0 · ★ 最复杂）</h3>
+            <p class="card-desc">说出 gather 的索引重映射**在数值上如何被验证**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-06-exec-pad/index.html" style="--card-color: #4ade80" data-code="l6-06" data-title="pad 的执行（p0 · ★ 本层最大族）" data-sub="**说出 `pad` 为什么是本层最大族**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-06</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">pad 的执行（P0 · ★ 本层最大族）</h3>
+            <p class="card-desc">**说出 `pad` 为什么是本层最大族**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-07-exec-reshape/index.html" style="--card-color: #4ade80" data-code="l6-07" data-title="reshape 的执行（p0）" data-sub="说出 `reshape` 降级的**三步模式**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-07</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">reshape 的执行（P0）</h3>
+            <p class="card-desc">说出 `reshape` 降级的**三步模式**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-08-exec-reverse-slice/index.html" style="--card-color: #4ade80" data-code="l6-08" data-title="slice / reverse 的执行" data-sub="说出 `slice` 降级的**核心判据**">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-08</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">slice / reverse 的执行</h3>
+            <p class="card-desc">说出 `slice` 降级的**核心判据**</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-09-exec-scatter-and-misc/index.html" style="--card-color: #4ade80" data-code="l6-09" data-title="scatter 与杂项（l6 收官）" data-sub="**解释 scatter 隐式维与显式维分片的区别**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-09</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">scatter 与杂项（L6 收官）</h3>
+            <p class="card-desc">**解释 scatter 隐式维与显式维分片的区别**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L6-execution/L6-10-exec-single-device-and-alltoall/index.html" style="--card-color: #4ade80" data-code="l6-10" data-title="单设备与 all-to-all（p2 · l6 最后一课）" data-sub="**说明单设备分片如何被执行**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L6-10</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">单设备与 all-to-all（P2 · L6 最后一课）</h3>
+            <p class="card-desc">**说明单设备分片如何被执行**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="layer-section" data-layer-id="L7">
+      <div class="layer-header">
+        <div class="layer-title-wrap">
+          <span class="layer-badge" style="background: #2dd4bf">L7</span>
+          <h2 class="layer-title">第 7 层：综合实战</h2>
+          <span class="layer-sub">端到端走通大模型并行策略与调试排错手册</span>
+        </div>
+        <div class="layer-meta">4 课 · 复用</div>
+      </div>
+      <div class="cards-grid">
+        
+        <a class="card" href="L7-practice/L7-01-end-to-end-walkthrough/index.html" style="--card-color: #2dd4bf" data-code="l7-01" data-title="端到端走查（p0 · l7 开篇）" data-sub="说出**空轴网格** `sdy.mesh @m = <[], device_ids=[0]>` 的含义与用途">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L7-01</span>
+              <span class="card-scenes">5 幕场景</span>
+            </div>
+            <h3 class="card-title">端到端走查（P0 · L7 开篇）</h3>
+            <p class="card-desc">说出**空轴网格** `sdy.mesh @m = <[], device_ids=[0]>` 的含义与用途</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L7-practice/L7-02-parallelism-strategies/index.html" style="--card-color: #2dd4bf" data-code="l7-02" data-title="并行策略（p0）" data-sub="**给定模型规模与设备数，选合理策略并说明代价**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L7-02</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">并行策略（P0）</h3>
+            <p class="card-desc">**给定模型规模与设备数，选合理策略并说明代价**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L7-practice/L7-03-debugging-playbook/index.html" style="--card-color: #2dd4bf" data-code="l7-03" data-title="调试手册（p0）" data-sub="**给定一个「坏」ir 能定位原因**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L7-03</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">调试手册（P0）</h3>
+            <p class="card-desc">**给定一个「坏」IR 能定位原因**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+        <a class="card" href="L7-practice/L7-04-dialect-agnostic-integration/index.html" style="--card-color: #2dd4bf" data-code="l7-04" data-title="跨方言集成（p1 · **全部 75 课的最后一课**）" data-sub="**写出一条自定义算子的 sharding rule 并被传播正确使用**（todolist 验收点）">
+          <div>
+            <div class="card-top">
+              <span class="card-code">L7-04</span>
+              <span class="card-scenes">6 幕场景</span>
+            </div>
+            <h3 class="card-title">跨方言集成（P1 · **全部 75 课的最后一课**）</h3>
+            <p class="card-desc">**写出一条自定义算子的 sharding rule 并被传播正确使用**（TODOLIST 验收点）</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-link-txt">进入课件学习 →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <div id="empty-state">
+    <p style="font-size: 18px; font-weight: 600;">未找到匹配的课件</p>
+    <p style="font-size: 14px; margin-top: 6px;">尝试输入不同的关键词或重置筛选条件</p>
+  </div>
+
+  <footer>
+    <p>Shardy Animations · OpenXLA SDY Dialect Interactive Courseware</p>
+    <p style="margin-top: 6px;">纯静态架构，无 CDN 依赖，支持双击离线浏览与 GitHub Pages 托管部署。</p>
+  </footer>
+</div>
+
+<script>
+// Search & Filter Controller
+const searchInput = document.getElementById("search");
+const filterTabs = document.querySelectorAll(".filter-tab");
+const sections = document.querySelectorAll(".layer-section");
+const cards = document.querySelectorAll(".card");
+const emptyState = document.getElementById("empty-state");
+
+let currentFilter = "all";
+let currentQuery = "";
+
+function applyFilters() {
+  let visibleCardsCount = 0;
+  
+  sections.forEach(sec => {
+    const secLayer = sec.getAttribute("data-layer-id");
+    const matchesTab = (currentFilter === "all" || currentFilter === secLayer);
+    
+    let secHasVisibleCard = false;
+    const secCards = sec.querySelectorAll(".card");
+    
+    secCards.forEach(card => {
+      const code = card.getAttribute("data-code") || "";
+      const title = card.getAttribute("data-title") || "";
+      const sub = card.getAttribute("data-sub") || "";
+      const matchesSearch = !currentQuery || 
+        code.includes(currentQuery) || 
+        title.includes(currentQuery) || 
+        sub.includes(currentQuery);
+      
+      if (matchesTab && matchesSearch) {
+        card.classList.remove("hidden");
+        secHasVisibleCard = true;
+        visibleCardsCount++;
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+    
+    if (secHasVisibleCard) {
+      sec.classList.remove("hidden");
+    } else {
+      sec.classList.add("hidden");
+    }
+  });
+  
+  if (visibleCardsCount === 0) {
+    emptyState.style.display = "block";
+  } else {
+    emptyState.style.display = "none";
+  }
+}
+
+filterTabs.forEach(tab => {
+  tab.addEventListener("click", () => {
+    filterTabs.forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    currentFilter = tab.getAttribute("data-layer");
+    applyFilters();
+  });
+});
+
+searchInput.addEventListener("input", (e) => {
+  currentQuery = e.target.value.trim().toLowerCase();
+  applyFilters();
+});
+
+// Shortcut / to focus search
+window.addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  }
+});
+</script>
+</body>
+</html>
